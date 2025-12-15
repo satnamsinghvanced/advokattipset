@@ -7,7 +7,7 @@ import { getCachedThemeData } from "@/services/page/theme-service";
 import { generatePageMetadata } from "@/utils/metadata";
 import { Metadata } from "next";
 
-const API_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
+const API_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3001";
 
 export async function generateMetadata(): Promise<Metadata> {
   const doc: any = await getCachedHomePageData();
