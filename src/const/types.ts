@@ -237,9 +237,10 @@ export interface ArticleCategoryPageProps extends SlugPageProps {
 export interface HowItWorksProps {
   cards: any;
   flex?: boolean;
-  title?: string
-  data?: any
-  titleClass?: string
+  title?: string;
+  data?: any;
+  titleClass?: string;
+  howItWorks?: boolean;
 }
 
 export interface LogoProps {
@@ -256,11 +257,11 @@ export interface FooterProps extends LogoProps {
 }
 
 export interface ArticlesCardProps {
-  image: string
-  date: string
-  title: string
-  href?: string
-  readMoreText?: string
+  image: string;
+  date: string;
+  title: string;
+  href?: string;
+  readMoreText?: string;
 }
 
 export interface BreadcrumbsProps {
@@ -277,11 +278,11 @@ export type HeadingProps = {
 };
 
 export interface RedirectButtonProps {
-  text?: any,
-  redirect?: string,
-  className?: string
-  isIconOnly?: boolean,
-  disableAnimation?: boolean
+  text?: any;
+  redirect?: string;
+  className?: string;
+  isIconOnly?: boolean;
+  disableAnimation?: boolean;
 }
 
 export interface County {
