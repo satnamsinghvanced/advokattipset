@@ -51,7 +51,7 @@ const Footer = async ({ logoText }: FooterProps) => {
               }
             </div>
             <div className="text-background flex gap-2 items-end max-md:hidden" aria-label="Social Media | Advokattipset.no">
-              {socialLinks && socialLinks.map((link: any, index: number) => (
+              {socialLinks && socialLinks?.map((link: any, index: number) => (
                 <Link
                   key={index}
                   href={link.href}
@@ -75,9 +75,9 @@ const Footer = async ({ logoText }: FooterProps) => {
           <div className="w-fit">
             <div className="text-background/70 text-sm">Artikler</div>
             <div className="flex flex-col gap-2 mt-4 text-background/80">
-              {articles && articles.map((article: any, index: number) => (
+              {articles && articles?.map((article: any, index: number) => (
                 <Link href={article.href} key={index}>
-                  {article.title}
+                  {article?.title}
                 </Link>
               ))}
             </div>
@@ -85,9 +85,9 @@ const Footer = async ({ logoText }: FooterProps) => {
           <div className="w-fit">
             <div className="text-background/70 text-sm">Steder</div>
             <div className="flex flex-col gap-2 mt-4 text-background/80">
-              {places && places.map((place: any, index: number) => (
+              {places && places?.map((place: any, index: number) => (
                 <Link href={place.href} key={index}>
-                  {place.title}
+                  {place?.title}
                 </Link>
               ))}
             </div>
@@ -95,9 +95,9 @@ const Footer = async ({ logoText }: FooterProps) => {
           <div className="w-fit">
             <div className="text-background/70 text-sm">Selskaper</div>
             <div className="flex flex-col gap-2 mt-4 text-background/80">
-              {companies && companies.map((company: any, index: number) => (
+              {companies && companies?.map((company: any, index: number) => (
                 <Link href={company.href} key={index}>
-                  {company.title}
+                  {company?.title}
                 </Link>
               ))}
             </div>
@@ -106,7 +106,7 @@ const Footer = async ({ logoText }: FooterProps) => {
             <div className="w-fit">
               <div className="text-background/70 text-sm">Explore</div>
               <div className="flex flex-col gap-2 mt-4 text-background/80">
-                {exploreLinks && exploreLinks.map((link: any, index: number) => (
+                {exploreLinks && exploreLinks?.map((link: any, index: number) => (
                   <Link href={link.href} key={index}>
                     {link.text}
                   </Link>
@@ -134,7 +134,7 @@ const Footer = async ({ logoText }: FooterProps) => {
           </div>
           <div className="w-fit">
             <div className="text-background flex items-end mt-[40px] md:hidden">
-              {socialLinks && socialLinks.map((link: any, index: number) => (
+              {socialLinks && socialLinks?.map((link: any, index: number) => (
                 <Link
                   key={index}
                   href={link.href}
@@ -160,12 +160,12 @@ const Footer = async ({ logoText }: FooterProps) => {
         </div>
         <div className="flex sm:flex-nowrap flex-wrap sm:justify-between justify-start max-w-7xl m-auto lg:mt-6 sm:py-8 py-6 px-4">
           <div className="flex items-end w-fit text-sm text-background/80">
-            {footerText && footerText.map((text: any, index: number) => (
+            {footerText && footerText?.map((text: any, index: number) => (
               <span key={index}>{text.text}</span>
             ))}
           </div>
           <div className="w-fit mt-2 sm:mt-0 text-sm text-background/80">
-            {footerLinks && footerLinks.map((link: any, index: number) => (
+            {footerLinks && footerLinks?.map((link: any, index: number) => (
               <span key={index}>
                 <Link href={link.href}>{link.text}</Link>
                 {index < footerLinks.length - 1 && " | "}

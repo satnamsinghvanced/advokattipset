@@ -20,7 +20,7 @@ export async function generateMetadata() {
         description: metaDescription || "Advokattipset.no privacy policy page",
         path: "/privacy-policy",
         keywords: metaKeywords
-            ? metaKeywords.split(',').map((k: string) => k.trim()).filter(Boolean)
+            ? metaKeywords.split(',')?.map((k: string) => k.trim()).filter(Boolean)
             : ["privacy policy", "advokattipset", "terms and conditions", "data privacy", "user data"],
         type: "website",
         image: metaImage || null,
@@ -48,7 +48,7 @@ const PrivacyPolicyPage = async () => {
                     <Breadcrumbs className="!mt-8 !m-0 !p-0" />
                     <div className="mt-8">
                         <h1 className="text-4xl md:text-6xl font-bold text-primary mb-4 leading-tight">
-                            {privacyPolicyData.title}
+                            {privacyPolicyData?.title}
                         </h1>
                         <p className="text-secondary text-base mb-8">
                             Last Update: {formatDate(privacyPolicyData.updatedAt || privacyPolicyData.createdAt)}

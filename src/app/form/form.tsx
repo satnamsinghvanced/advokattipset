@@ -93,7 +93,7 @@ const DefaultRadioGroup = ({
         aria-describedby={isInvalid ? errorId : undefined}
       >
         {Array.isArray(field.options) &&
-          field.options.map((opt: string, optIndex: number) => (
+          field.options?.map((opt: string, optIndex: number) => (
             <div key={`${field._id}-${optIndex}`} className="flex items-center">
               <input
                 type="radio"
@@ -170,7 +170,7 @@ const FormSelectionField = ({
         <p className="text-danger text-sm">{error}</p>
       )}
       <div className="grid grid-cols-2 gap-3 w-full">
-        {formSelect.map((form: FormSelectItem) => {
+        {formSelect?.map((form: FormSelectItem) => {
           const isSelected = selectedForms.includes(form._id);
 
           return (
@@ -264,7 +264,7 @@ const Form = ({ formSelect, isMultiSelect, pageTitle, pageDescription, privacyTe
 
   const loadFormData = async (index: number, formId: string) => {
     // Update loading state for this form
-    setSelectedForms(prev => prev.map((form, i) =>
+    setSelectedForms(prev => prev?.map((form, i) =>
       i === index ? { ...form, loading: true, error: null } : form
     ));
 
@@ -277,7 +277,7 @@ const Form = ({ formSelect, isMultiSelect, pageTitle, pageDescription, privacyTe
       // console.log(`Fetched form data for ${formId}:`, data);
 
       // Update form data for this form
-      setSelectedForms(prev => prev.map((form, i) =>
+      setSelectedForms(prev => prev?.map((form, i) =>
         i === index ? {
           ...form,
           formData: data,
@@ -290,7 +290,7 @@ const Form = ({ formSelect, isMultiSelect, pageTitle, pageDescription, privacyTe
       console.error('Error fetching form:', error);
 
       // Update error state for this form
-      setSelectedForms(prev => prev.map((form, i) =>
+      setSelectedForms(prev => prev?.map((form, i) =>
         i === index ? {
           ...form,
           error: error.message || 'Failed to load form. Please try again.',
@@ -441,7 +441,7 @@ const Form = ({ formSelect, isMultiSelect, pageTitle, pageDescription, privacyTe
     value: any,
     field: FormField
   ) => {
-    setSelectedForms(prev => prev.map((form, i) => {
+    setSelectedForms(prev => prev?.map((form, i) => {
       if (i !== formIndex) return form;
 
       const newValues = { ...form.values, [name]: value };
@@ -461,7 +461,7 @@ const Form = ({ formSelect, isMultiSelect, pageTitle, pageDescription, privacyTe
     value: any,
     field: FormField
   ) => {
-    setSelectedForms(prev => prev.map((form, i) => {
+    setSelectedForms(prev => prev?.map((form, i) => {
       if (i !== formIndex) return form;
 
       const newTouched = { ...form.touched, [name]: true };
@@ -489,7 +489,7 @@ const Form = ({ formSelect, isMultiSelect, pageTitle, pageDescription, privacyTe
       }
 
       // Update touched
-      setSelectedForms(prev => prev.map((form, i) =>
+      setSelectedForms(prev => prev?.map((form, i) =>
         i === currentFormIndex
           ? { ...form, touched: { ...form.touched, [field.name]: true } }
           : form
@@ -539,7 +539,7 @@ const Form = ({ formSelect, isMultiSelect, pageTitle, pageDescription, privacyTe
           }
 
           // Update touched for address fields
-          setSelectedForms(prev => prev.map((form, i) =>
+          setSelectedForms(prev => prev?.map((form, i) =>
             i === currentFormIndex
               ? {
                 ...form,
@@ -557,7 +557,7 @@ const Form = ({ formSelect, isMultiSelect, pageTitle, pageDescription, privacyTe
       });
 
     // Update errors for current form
-    setSelectedForms(prev => prev.map((form, i) =>
+    setSelectedForms(prev => prev?.map((form, i) =>
       i === currentFormIndex
         ? { ...form, errors: { ...form.errors, ...stepErrors } }
         : form
@@ -601,9 +601,9 @@ const Form = ({ formSelect, isMultiSelect, pageTitle, pageDescription, privacyTe
     try {
       setSubmitLoading(true)
       // Create separate objects for each form
-      const formSubmissions = selectedForms.map(form => ({
+      const formSubmissions = selectedForms?.map(form => ({
         formId: form.id,
-        formTitle: form.title,
+        formTitle: form?.title,
         values: form.values
       }));
 
@@ -702,7 +702,7 @@ const Form = ({ formSelect, isMultiSelect, pageTitle, pageDescription, privacyTe
           {value && Array.isArray(value) && value.length > 0 && (
             <div className="mt-2 space-y-1">
               <p className="text-sm font-medium">Selected files:</p>
-              {value.map((file: File, i: number) => (
+              {value?.map((file: File, i: number) => (
                 <p key={i} className="text-sm text-secondary">
                   • {file.name} ({(file.size / 1024 / 1024).toFixed(2)}MB)
                 </p>
@@ -922,7 +922,7 @@ const Form = ({ formSelect, isMultiSelect, pageTitle, pageDescription, privacyTe
                 handleBlur(formIndex, field.name, selectedValue, field);
               }}
             >
-              {availableOptions.map((opt: string, optIndex: number) => (
+              {availableOptions?.map((opt: string, optIndex: number) => (
                 <SelectItem key={opt || `opt-${optIndex}`} textValue={opt}>
                   {opt}
                 </SelectItem>
@@ -948,7 +948,7 @@ const Form = ({ formSelect, isMultiSelect, pageTitle, pageDescription, privacyTe
                   <p className="text-danger text-sm">{currentFormData?.errors[field.name]}</p>
                 )}
                 <div className="flex flex-col gap-2">
-                  {field.options.map((opt: string, optIndex: number) => (
+                  {field.options?.map((opt: string, optIndex: number) => (
                     <Checkbox
                       key={`${field._id}-${optIndex}`}
                       isSelected={isCheckboxChecked(field.name, opt)}
@@ -1030,7 +1030,7 @@ const Form = ({ formSelect, isMultiSelect, pageTitle, pageDescription, privacyTe
           {currentStep === 0 && (
             <FormSelectionField
               formSelect={formSelect}
-              selectedForms={selectedForms.map(f => f.id)}
+              selectedForms={selectedForms?.map(f => f.id)}
               onSelect={handleFormSelect}
               error={currentForm?.errors.selectedFormType}
               isInvalid={isInvalid}
@@ -1043,7 +1043,7 @@ const Form = ({ formSelect, isMultiSelect, pageTitle, pageDescription, privacyTe
           {/* Show current step fields */}
           {currentStepData && currentStepData.fields
             .filter((field: FormField) => field.visible !== false && field.name !== "selectedFormType")
-            .map((field: FormField, index: number) =>
+            ?.map((field: FormField, index: number) =>
               renderField(field, index, currentFormIndex)
             )}
         </form>
@@ -1104,7 +1104,7 @@ const Form = ({ formSelect, isMultiSelect, pageTitle, pageDescription, privacyTe
 
           {steps.length > 0 && (
             <div className="flex gap-10 justify-center md:justify-start mb-4 max-lg:hidden">
-              {steps.map((_, i: number) => (
+              {steps?.map((_, i: number) => (
                 <div
                   key={i}
                   className={`h-6 w-[110px] flex-1 rounded-full ${i <= currentStep ? "bg-formsteps" : "bg-secondary/20"
@@ -1132,7 +1132,7 @@ const Form = ({ formSelect, isMultiSelect, pageTitle, pageDescription, privacyTe
                 📋 Selected Forms: ({currentFormIndex + 1} of {selectedForms.length})
               </p>
               <div className="flex flex-wrap gap-2 mt-2">
-                {selectedForms.map((form, index) => (
+                {selectedForms?.map((form, index) => (
                   <button
                     key={form.id}
                     type="button"
@@ -1145,7 +1145,7 @@ const Form = ({ formSelect, isMultiSelect, pageTitle, pageDescription, privacyTe
                       : 'bg-white text-primary border border-primary'
                       }`}
                   >
-                    {form.title}
+                    {form?.title}
                   </button>
                 ))}
               </div>
@@ -1159,7 +1159,7 @@ const Form = ({ formSelect, isMultiSelect, pageTitle, pageDescription, privacyTe
         {/* Mobile progress steps - only show if we have steps */}
         {visibleSteps.length > 0 && (
           <div className="hidden gap-2 justify-center md:justify-start mb-12 max-lg:flex max-w-xl mx-auto">
-            {visibleSteps.map((_, i: number) => (
+            {visibleSteps?.map((_, i: number) => (
               <div
                 key={i}
                 className={`h-2 flex-1 rounded-full ${i <= currentStep ? "bg-formsteps" : "bg-secondary/20"
@@ -1199,7 +1199,7 @@ const Form = ({ formSelect, isMultiSelect, pageTitle, pageDescription, privacyTe
             <div className="flex flex-col gap-[55px] text-[16px] font-semibold min-h-[300px]">
               <FormSelectionField
                 formSelect={formSelect}
-                selectedForms={selectedForms.map(f => f.id)}
+                selectedForms={selectedForms?.map(f => f.id)}
                 onSelect={handleFormSelect}
                 isMultiSelectMode={isMultiSelectMode}
               />

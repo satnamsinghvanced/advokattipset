@@ -9,9 +9,9 @@ const AllFaqs = ({ faqData }: { faqData: AllFaqCategory[] }) => {
         <div>
             {faqData?.map((category, index) => (
                 <div key={index}>
-                    <Heading className=' !text-[32px] lg:!text-[48px] font-semibold leading-10 lg:leading-18 lg:!mb-6' heading={category.title} />
+                    <Heading className=' !text-[32px] lg:!text-[48px] font-semibold leading-10 lg:leading-18 lg:!mb-6' heading={category?.title} />
                     <Accordion variant="splitted" className="px-0 mx-0 mb-12">
-                        {category?.faqData.map((faq, idx) => (
+                        {category?.faqData?.map((faq, idx) => (
                             <AccordionItem
                                 key={idx}
                                 title={<span className="text-primary lg:text-2xl text-[20px] font-medium lg:font-semibold">{faq.question}</span>}

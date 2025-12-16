@@ -21,12 +21,12 @@ const ArticlesList = async ({
         aria-label={`Articles about ${category}`}
       >
         {articles.length > 0 ? (
-          articles.map((article: any) => (
+          articles?.map((article: any) => (
             <ArticlesCard
               key={article._id}
               image={article.image}
               date={article.showDate || article.date}
-              title={article.title}
+              title={article?.title}
               href={`/articles/${category}/${article.slug}`}
             />
           ))

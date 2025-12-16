@@ -74,7 +74,7 @@ const ContactForm = ({ data }: ContactFormProps) => {
                             {data.contactFormTitle}
                         </h2>
                         <div className="space-y-6 ">
-                            {data.contactFields && data.contactFields.map((field) => (
+                            {data.contactFields && data.contactFields?.map((field) => (
                                 <div key={field._id} className="my-10  text-dark">
                                     <FormField
                                         field={field}

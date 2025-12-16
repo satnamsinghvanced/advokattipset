@@ -42,7 +42,7 @@ export async function generateMetadata() {
     keywords: metaKeywords
       ? metaKeywords
           .split(",")
-          .map((k: string) => k.trim())
+          ?.map((k: string) => k.trim())
           .filter(Boolean)
       : ["advokattipset", "real estate", "agents", "compare"],
     type: ogType || "website",
@@ -71,7 +71,7 @@ const ArticlePage = async ({ searchParams }: ArticlePageProps) => {
       <Breadcrumbs className="mt-8" />
       <ArticleContent
         searchParams={searchParams}
-        title={articlesPage.title}
+        title={articlesPage?.title}
         categoriesHeading={articlesPage.categoriesHeading}
       />
     </HomePage>

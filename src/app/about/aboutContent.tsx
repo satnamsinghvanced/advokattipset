@@ -20,9 +20,9 @@ export default async function AboutContent({ content }: AboutContentProps) {
       <div className="w-full flex gap-8 max-w-7xl m-auto py-10 pt-5 flex-row max-md:flex-col px-4 md:px-6 lg:px-8">
         <div className="w-full">
           <div className="flex flex-col gap-10">
-            {content.content.map((item, index) => (
+            {content.content?.map((item, index) => (
               <div key={index} className="flex flex-col gap-5">
-                <Heading heading={item.title} className={` text-primary leading-10 lg:leading-18  ${index === 0
+                <Heading heading={item?.title} className={` text-primary leading-10 lg:leading-18  ${index === 0
                   ? "!text-[64px] max-lg:!text-[36px] !font-bold !mb-[10px]"
                   : "!text-5xl max-lg:!text-[36px] !font-semibold !mb-[2px]"
                   }  `} />

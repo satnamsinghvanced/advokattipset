@@ -35,7 +35,7 @@ export async function generateMetadata({
     title: metaTitle || `${category} Articles | Advokattipset.no`,
     description: metaDescription || `Read expert articles about ${category} on Advokattipset.no.`,
     path: finalCanonical,
-    keywords: metaKeywords ? metaKeywords.split(",").map((k: string) => k.trim()).filter(Boolean) : ["advokattipset", category, "real estate", "articles"],
+    keywords: metaKeywords ? metaKeywords.split(",")?.map((k: string) => k.trim()).filter(Boolean) : ["advokattipset", category, "real estate", "articles"],
     type: ogType || "website",
     image: ogImage || null,
     ogTitle: ogTitle || metaTitle || `${category} Articles | Advokattipset.no`,
@@ -94,7 +94,7 @@ const ArticleCategoryPage = async ({ params, searchParams }: ArticleCategoryPage
                   }`}
               >
                 <span className="text-[14px] lg:text-xl font-semibold">
-                  {tab.title}
+                  {tab?.title}
                 </span>
               </Link>
             ))}

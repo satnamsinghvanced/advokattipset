@@ -45,7 +45,7 @@ const Articles = ({
                     }`}
                 >
                   <span className="text-[14px] lg:text-xl font-semibold">
-                    {tab.title}
+                    {tab?.title}
                   </span>
                 </Link>
               ))}
@@ -58,12 +58,12 @@ const Articles = ({
                 aria-label={`Articles about ${tabs.find((t: { slug: string; title: string }) => t.slug === selectedCategorySlug)?.title || 'Articles'}`}
               >
                 {data?.length > 0 ? (
-                  data.map((article: any) => (
+                  data?.map((article: any) => (
                     <ArticlesCard
                       key={article._id}
                       image={article.image}
                       date={article.showDate}
-                      title={article.title}
+                      title={article?.title}
                       href={`/articles/${selectedCategorySlug}/${article.slug}`}
                     />
                   ))

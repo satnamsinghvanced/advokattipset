@@ -42,7 +42,7 @@ export async function generateMetadata(): Promise<Metadata> {
     keywords: metaKeywords
       ? metaKeywords
           .split(",")
-          .map((k: string) => k.trim())
+          ?.map((k: string) => k.trim())
           .filter(Boolean)
       : ["advokattipset", "real estate", "agents", "compare"],
     type: ogType || "website",

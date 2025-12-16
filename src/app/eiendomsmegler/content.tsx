@@ -31,7 +31,7 @@ const EiendomsmeglerContent = async ({ searchParams, cp, county, realestateAgent
               <div className="w-full">
                 <Heading
                   className="!text-[64px] max-md:!text-[36px] font-bold text-primary leading-10 lg:leading-18 pr-3"
-                  heading={` ${realestateAgents.title}`}
+                  heading={` ${realestateAgents?.title}`}
                 ></Heading>
                 <div
                   dangerouslySetInnerHTML={{

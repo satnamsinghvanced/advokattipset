@@ -39,7 +39,7 @@ const Navbar = ({ logo, logoText }: NavbarProps) => {
           </Link>
         </div>
         <div className="hidden md:flex space-x-2 md:space-x-6 lg:space-x-10 items-center">
-          {NAV_LINKS.map((link) => (
+          {NAV_LINKS?.map((link) => (
             <div
               key={link.href}
               className="flex items-center space-x-2 md:space-x-6 lg:space-x-10"

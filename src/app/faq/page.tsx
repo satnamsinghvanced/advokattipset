@@ -19,7 +19,7 @@ export async function generateMetadata() {
         title: metaTitle || heading || "faq | Advokattipset.no",
         description: metaDescription || subHeading || "Welcome to Advokattipset.no — compare and find the best real estate agents in Norway.",
         path: "/",
-        keywords: metaKeywords ? metaKeywords.split(",").map((k: string) => k.trim()).filter(Boolean) : ["advokattipset", "real estate", "agents", "compare"],
+        keywords: metaKeywords ? metaKeywords.split(",")?.map((k: string) => k.trim()).filter(Boolean) : ["advokattipset", "real estate", "agents", "compare"],
         type: ogType || "website",
         image: metaImage || ogImage || bannerImage || null,
         ogTitle: ogTitle || metaTitle || "Home | Advokattipset.no",

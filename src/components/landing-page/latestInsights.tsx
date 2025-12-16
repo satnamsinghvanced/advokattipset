@@ -13,7 +13,7 @@ const LatestInsights = ({ articlesHeading, data }: any) => {
                 role="list"
                 aria-label="Latest insights articles"
             >
-                {data && data.slice(0, 4).map(({ title, slug, image, date, categoryId }: Articles) => (
+                {data && data.slice(0, 4)?.map(({ title, slug, image, date, categoryId }: Articles) => (
                     <LatestInsightsCard
                         key={slug}
                         image={image ?? ''}

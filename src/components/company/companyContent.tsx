@@ -16,7 +16,7 @@ const CompanyContent = async ({ cp }: any) => {
     return (
         <div className="my-8 ">
             <div className="flex flex-col gap-6">
-                {com_data.map((company: any) => (
+                {com_data?.map((company: any) => (
 
                     <AgentCard isAgent={true} key={company._id} {...company} />
                 ))}

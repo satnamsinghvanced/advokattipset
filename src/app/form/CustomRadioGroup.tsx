@@ -17,7 +17,7 @@ const CustomRadioGroup = ({
       aria-invalid={isInvalid}
     >
       {Array.isArray(field.options) &&
-        field.options.map((opt: string, optIndex: number) => {
+        field.options?.map((opt: string, optIndex: number) => {
           const isSelected = value === opt;
           return (
             <button

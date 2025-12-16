@@ -22,7 +22,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "advokattipset.no",
+        hostname: "api.advokattipset.no",
         pathname: "/**",
       },
     ],

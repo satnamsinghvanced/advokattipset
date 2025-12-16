@@ -15,7 +15,7 @@ export const getCachedLatestFAQs = unstable_cache(
                 .populate("categoryId", "categoryName")
                 .lean();
 
-            return faqs.map((faq: any) => ({
+            return faqs?.map((faq: any) => ({
                 id: faq?._id.toString(),
                 question: faq.question,
                 answer: faq.answer,

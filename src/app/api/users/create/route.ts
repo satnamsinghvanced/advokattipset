@@ -246,7 +246,7 @@ export async function POST(req: Request) {
 
     console.log("\n💾 ========== PREPARING DATA FOR STORAGE ==========");
 
-    const partnerEmailsData = selectedPartners.map(p => ({
+    const partnerEmailsData = selectedPartners?.map(p => ({
       partnerId: p._id,
       email: p.email,
       companyName: p.name || p.companyName || "Unknown Company",
@@ -254,7 +254,7 @@ export async function POST(req: Request) {
       status: "pending"
     }));
 
-    // const leadTypesData = selectedPartners.map(p => ({
+    // const leadTypesData = selectedPartners?.map(p => ({
     //   partnerId: p._id,
     //   leadTypes: p.leadTypes || []
     // }));
@@ -335,7 +335,7 @@ export async function POST(req: Request) {
       },
 
       // Final selection details
-      selectedPartners: selectedPartners.map(p => ({
+      selectedPartners: selectedPartners?.map(p => ({
         partnerId: p._id,
         name: p.name,
         email: p.email,
@@ -367,7 +367,7 @@ export async function POST(req: Request) {
     console.log("\n📝 ========== UPDATING USER RECORD ==========");
 
     const updateData: any = {
-      partnerIds: selectedPartners.map(p => p._id),
+      partnerIds: selectedPartners?.map(p => p._id),
       // partnerEmails: partnerEmailsData,
       // leadTypes: leadTypesData,
       status: "Pending",
@@ -440,7 +440,7 @@ export async function POST(req: Request) {
       ]
     }
 
-    const emailResultLog = emailResults.map(r => ({
+    const emailResultLog = emailResults?.map(r => ({
       partnerId: r.partnerId,
       email: r.email,
       status: r.status
@@ -611,7 +611,7 @@ const isWishesMatch = async (partner: any, userValues: any) => {
       console.log(`    ✅ MATCH: "${userAnswerStr}" matches expected`);
     } else {
       console.log(`    ❌ NO MATCH: "${userAnswerStr}" not found in expected answers`);
-      console.log(`       Expected: ${JSON.stringify(expectedAnswers.map((e: any) => `"${String(e).trim()}"`))}`);
+      console.log(`       Expected: ${JSON.stringify(expectedAnswers?.map((e: any) => `"${String(e).trim()}"`))}`);
       return false;
     }
   }
@@ -676,7 +676,7 @@ function sortPartnersByPriority(partners: any[]): any[] {
  * Update partner leads count
  */
 async function updatePartnerLeadsCount(partners: any[]) {
-  const updatePromises = partners.map(partner =>
+  const updatePromises = partners?.map(partner =>
     Partner.findByIdAndUpdate(
       partner._id,
       {
@@ -705,7 +705,7 @@ async function sendMailToPartners(partners: any[], userValues: any, partnerEmail
     const smtpData = await SmtpConfig.findOne();
 
     if (!smtpData) {
-      return partnerEmailsData.map(data => ({
+      return partnerEmailsData?.map(data => ({
         ...data,
         status: 'failed',
         error: 'No SMTP configuration',
@@ -764,7 +764,7 @@ async function sendMailToPartners(partners: any[], userValues: any, partnerEmail
     return results;
 
   } catch (error: any) {
-    return partnerEmailsData.map(data => ({
+    return partnerEmailsData?.map(data => ({
       ...data,
       status: 'failed',
       error: error.message,

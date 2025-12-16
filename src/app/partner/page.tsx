@@ -23,7 +23,7 @@ export async function generateMetadata() {
         description: metaDescription || subHeading || "Learn more about becoming a Advokattipset partner",
         path: slug || "/partner",
         keywords: metaKeywords
-            ? metaKeywords.split(',').map((k: string) => k.trim()).filter(Boolean)
+            ? metaKeywords.split(',')?.map((k: string) => k.trim()).filter(Boolean)
             : ["partner", "advokattipset", "business", "collaboration"],
         type: ogType || "website",
         image: metaImage || ogImage || image || null,

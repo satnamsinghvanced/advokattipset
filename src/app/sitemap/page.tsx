@@ -20,7 +20,7 @@ export async function generateMetadata() {
         description: metaDescription || "Overview of all pages on Advokattipset.no",
         path: "/sitemap",
         keywords: metaKeywords
-            ? metaKeywords.split(',').map((k: string) => k.trim()).filter(Boolean)
+            ? metaKeywords.split(',')?.map((k: string) => k.trim()).filter(Boolean)
             : ["sitemap", "advokattipset", "website overview", "site structure", "pages"],
         type: "website",
         image: metaImage || null,

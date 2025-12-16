@@ -19,7 +19,7 @@ export async function generateMetadata() {
     description: metaDescription || subHeading || "Fill out the form to get in touch",
     path: slug || "/form",
     keywords: metaKeywords
-      ? metaKeywords.split(',').map((k: string) => k.trim()).filter(Boolean)
+      ? metaKeywords.split(',')?.map((k: string) => k.trim()).filter(Boolean)
       : ["form", "contact", "get in touch"],
     type: ogType || "website",
     image: metaImage || ogImage || image || null,
@@ -45,7 +45,7 @@ const FormPage = async () => {
       <Form
         formSelect={formSelect}
         isMultiSelect={formPageData.multipleSelect}
-        pageTitle={formPageData.title}
+        pageTitle={formPageData?.title}
         pageDescription={formPageData.description}
         privacyText={formPageData.privacyText}
       />

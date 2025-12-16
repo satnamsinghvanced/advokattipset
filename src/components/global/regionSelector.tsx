@@ -18,7 +18,7 @@ export default function RegionSelector({
       </div>
       {/* County Buttons */}
       <div className="flex flex-wrap gap-3 justify-start border border-secondary/20 py-3 px-1 rounded-xl bg-background" >
-        {counties.map((county: County) => (
+        {counties?.map((county: County) => (
           <Link
             key={county._id}
             href={`?county=${county.slug}#c`}
@@ -42,7 +42,7 @@ export default function RegionSelector({
           {cityList.length === 0 ? (
             <div>No cities available for this region.</div>
           ) : (
-            cityList.map((city: City, index: number) => {
+            cityList?.map((city: City, index: number) => {
               const length = cityList.length;
               const isLast = index === length - 1;
               const isSecondLast = index === length - 2;

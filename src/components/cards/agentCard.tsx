@@ -58,7 +58,7 @@ const AgentCard = ({
                         }
 
                         <div className="pt-3 flex gap-2 flex-wrap">
-                            {features && features.slice(0, 4).map((features, index) => (
+                            {features && features.slice(0, 4)?.map((features, index) => (
                                 <FeatureChip key={index} label={features} />
                             ))}
                         </div>

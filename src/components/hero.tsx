@@ -23,8 +23,8 @@ export default async function HeroPage() {
   const { heroSection, whyChooseMeglertipCards, howDoesItworksCards, ourArticlesHeading, whyChooseMeglertipHeading, prosSection, citySectionHeading, articlesHeading, faq } = homepageRes
 
   const cards: HowItWorksCardType[] = Array.isArray(howDoesItworksCards)
-    ? howDoesItworksCards.map((item: any) => ({
-      title: item.title,
+    ? howDoesItworksCards?.map((item: any) => ({
+      title: item?.title,
       description: item.description,
       icon: item.icon,
     }))
@@ -61,14 +61,14 @@ export default async function HeroPage() {
         <Guides data={citySectionHeading} />
         {prosSection && prosSection.length > 1 && (
           <>
-            {prosSection.slice(1).map((section: any, index: number) => (
+            {prosSection.slice(1)?.map((section: any, index: number) => (
               <ImageWithTextWithPoints key={index} data={section} />
             ))}
           </>
         )}
         <LatestInsights articlesHeading={articlesHeading || ''} data={topArticles.data} />
         <div className="mb-20 lg:mb-0 ">
-          <FAQSection {...faqSectionProps} title={faq.title} />
+          <FAQSection {...faqSectionProps} title={faq?.title} />
         </div>
       </>
     </HomePage>

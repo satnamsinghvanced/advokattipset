@@ -20,7 +20,7 @@ export async function generateMetadata() {
     title: metaTitle || heading || "About Advokattipset.no",
     description: metaDescription || subHeading || "Learn more about Advokattipset.no",
     path: slug || "/about",
-    keywords: metaKeywords ? metaKeywords.split(',').map((k: string) => k.trim()).filter(Boolean) : ["about", "advokattipset", "real estate"],
+    keywords: metaKeywords ? metaKeywords.split(',')?.map((k: string) => k.trim()).filter(Boolean) : ["about", "advokattipset", "real estate"],
     type: ogType || "website",
     image: metaImage || ogImage || image || null,
     ogTitle: ogTitle || metaTitle || heading || "About Advokattipset.no",

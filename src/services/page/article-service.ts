@@ -19,7 +19,7 @@ export const getCachedArticleCategories = unstable_cache(
 
             // Fetch FAQs for each category
             const data = await Promise.all(
-                categories.map(async (category) => {
+                categories?.map(async (category) => {
                     const faqs = await Article.find({
                         categoryId: category._id,
                     })

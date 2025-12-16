@@ -74,7 +74,7 @@ const CompanyPagination = ({
 
                 {/* Page Numbers */}
                 <div className="flex gap-0.5">
-                    {getPageNumbers().map((page, index) =>
+                    {getPageNumbers()?.map((page, index) =>
                         page === "..." ? (
                             <span key={`ellipsis-${index}`} className="px-3 py-2">
                                 ...

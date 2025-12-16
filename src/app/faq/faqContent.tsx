@@ -13,7 +13,7 @@ export default async function FaqContent({ displayCategories, title, description
         />
         <p className="block md:hidden text-secondary text-sm mb-10">{description}</p>
         <AllFaqs
-          faqData={displayCategories.map((cat: any) => ({
+          faqData={displayCategories?.map((cat: any) => ({
             title: cat?.categoryName,
             faqData: cat?.faqs || [],
           }))}

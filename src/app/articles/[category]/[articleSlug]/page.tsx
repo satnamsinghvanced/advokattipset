@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: SlugPageProps) {
     title: metaTitle || ` | Advokattipset.no`,
     description: metaDescription || `Read expert articles about ${title} on Advokattipset.no.`,
     path: `articles/${articleCategory}/${canonicalUrl}`,
-    keywords: metaKeywords ? metaKeywords.split(",").map((k: string) => k.trim()).filter(Boolean) : ["advokattipset", "real estate", "articles"],
+    keywords: metaKeywords ? metaKeywords.split(",")?.map((k: string) => k.trim()).filter(Boolean) : ["advokattipset", "real estate", "articles"],
     type: ogType || "website",
     image: ogImage || null,
     ogTitle: ogTitle || metaTitle || `${title} | Advokattipset.no`,
