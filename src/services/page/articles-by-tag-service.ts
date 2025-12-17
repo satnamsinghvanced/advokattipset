@@ -6,7 +6,7 @@ export const getCachedArticlesByTags = unstable_cache(
     async (tags, slug) => {
         try {
             await connectDB();
-            console.log("tags at server action: ", tags); // e.g., ['home', 'faster']
+            // console.log("tags at server action: ", tags); // e.g., ['home', 'faster']
 
             const articlesByTags = await Article.find({
                 articleTags: { $in: tags },
