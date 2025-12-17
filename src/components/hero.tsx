@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import HomePage from "@/app/page";
 import { FAQSectionProps, HowItWorksCardType } from "@/const/types";
 import { getCachedLatestFAQs } from "@/services/page/faq-service";
 import { getCachedHomePageData } from "@/services/page/home-page-service";
@@ -28,12 +27,25 @@ export default async function HeroPage() {
     faq,
   } = homepageRes;
 
+  // Sort citySectionHeading.locations by order (rank)
+  const sortedLocations = citySectionHeading?.locations
+    ? [...citySectionHeading.locations].sort((a, b) => a.order - b.order)
+    : [];
+
+  // Replace locations with sortedLocations
+  const citySectionWithSortedLocations = {
+    ...citySectionHeading,
+    locations: sortedLocations,
+  };
+  // console.log(
+  //   JSON.stringify(citySectionWithSortedLocations.locations, null, 2)
+  // );
   const cards: HowItWorksCardType[] = Array.isArray(howDoesItworksCards)
     ? howDoesItworksCards?.map((item: any) => ({
-        title: item?.title,
-        description: item.description,
-        icon: item.icon,
-      }))
+      title: item?.title,
+      description: item.description,
+      icon: item.icon,
+    }))
     : [];
 
   const doc = await getCachedLatestFAQs();
@@ -54,7 +66,6 @@ export default async function HeroPage() {
   const topArticles = await JSON.parse(JSON.stringify(topArticlesDoc));
 
   return (
-    <HomePage>
       <>
         <Banner BannerData={heroSection} />
         <HowItWorks
@@ -69,7 +80,7 @@ export default async function HeroPage() {
           howItWorks={false}
         />
         <ImageWithTextWithPoints data={prosSection[0]} />
-        <Guides data={citySectionHeading} />
+        <Guides data={citySectionWithSortedLocations} />
         {prosSection && prosSection.length > 1 && (
           <>
             {prosSection.slice(1)?.map((section: any, index: number) => (
@@ -85,6 +96,5 @@ export default async function HeroPage() {
           <FAQSection {...faqSectionProps} title={faq?.title} />
         </div>
       </>
-    </HomePage>
   );
 }

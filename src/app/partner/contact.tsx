@@ -8,10 +8,9 @@ import { useContactForm } from '@/hooks/useContactForm';
 import { saveContactUs } from '@/services/page/contact-service';
 import { renderBoldBeforeColon } from '@/utils/renderBoldBeforeColon';
 import { useState } from 'react';
+import { IoCheckmarkCircle, IoWarning } from "react-icons/io5";
 import { RxCross2 } from "react-icons/rx";
 import FormField from './formField';
-import { IoCheckmarkCircle, IoWarning } from "react-icons/io5";
-
 
 const ContactForm = ({ data }: ContactFormProps) => {
     const [submitStatus, setSubmitStatus] = useState<'fail' | 'success' | 'error'>('fail');
@@ -97,7 +96,6 @@ const ContactForm = ({ data }: ContactFormProps) => {
                                 {isSubmitting ? 'Sender...' : data.buttonText}
                             </Button>
                         </div>
-
                         {isShowModel && (submitStatus === 'success' || submitStatus === 'error') && (
                             <div
                                 className={`mt-4 py-3 px-3.5 border rounded-md text-sm text-center fixed top-2 right-0 w-fit m-5 max-w-[400px]   !z-[999] shadow-2xl inset-shadow-sm ${submitStatus === 'success'

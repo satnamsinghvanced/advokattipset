@@ -2,7 +2,6 @@ import { CompanyPaginationProps } from "@/const/types";
 import Link from "next/link";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
-
 const CompanyPagination = ({
     com_current_page,
     com_total_pages,

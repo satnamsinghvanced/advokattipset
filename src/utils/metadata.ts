@@ -69,8 +69,8 @@ export async function generatePageMetadata({
     };
 
     const ogImageUrl = image ? getImageUrl(image) : `${cleanBase}/images/og-default.jpg`;
-    const pageTitle = title ? (title == 'Advokattipset.no' ? `Advokattipset.no` : `${title} |  Advokattipset.no`) : ' Advokattipset.no';
-    const ogFinalTitle = ogTitle ? `${ogTitle} | Advokattipset.no` : pageTitle;
+    const pageTitle = title ? (title == 'Meglertip.no' ? `Meglertip.no` : `${title} |  Meglertip.no`) : ' Meglertip.no';
+    const ogFinalTitle = ogTitle ? `${ogTitle} | Meglertip.no` : pageTitle;
     const ogFinalDescription = ogDescription || description;
 
     const openGraphImages = [
@@ -114,15 +114,15 @@ export async function generatePageMetadata({
             canonical: `${siteUrl}${canonicalUrl ? canonicalUrl : ''}` || `${cleanBase}${pathname}`,
             languages:
                 locales ?? {
-                    en: `${cleanBase}/en${canonicalUrl}`,
-                    no: `${cleanBase}/no${canonicalUrl}`,
+                    en: `${cleanBase}${canonicalUrl}`,
+                    no: `${cleanBase}${canonicalUrl}`,
                 },
         },
         openGraph: {
             title: ogFinalTitle,
             description: ogFinalDescription,
             url: canonicalUrl || `${cleanBase}${pathname}`,
-            siteName: "Advokattipset.no",
+            siteName: "Meglertip.no",
             type,
             images: openGraphImages,
             ...dates,

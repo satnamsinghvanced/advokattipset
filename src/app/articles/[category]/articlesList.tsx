@@ -1,6 +1,7 @@
 import ArticlesCard from "@/components/cards/articleCard";
 import Pagination from "@/components/global/pagination";
 import { ArticlesListProps } from "@/const/types";
+import { notFound } from "next/navigation";
 
 const ArticlesList = async ({
   initialData,
@@ -10,6 +11,9 @@ const ArticlesList = async ({
 }: ArticlesListProps) => {
 
   const articles = initialData?.data || [];
+  if (!articles || articles.length < 1) {
+    notFound()
+  }
   const totalPages = initialData?.totalPages || 1;
   const totalArticles = initialData?.total || 0;
 
@@ -38,7 +42,6 @@ const ArticlesList = async ({
           </div>
         )}
       </div>
-
       {totalPages > 1 && (
         <div className="mt-[40px] mb-[56px] lg:mb-[84px] lg:mx-20">
           <Pagination

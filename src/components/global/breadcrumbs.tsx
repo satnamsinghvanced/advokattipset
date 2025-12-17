@@ -1,10 +1,10 @@
 "use client";
 
+import { BreadcrumbsProps } from "@/const/types";
 import { capitalizeTitle } from "@/utils/capitalizeTitle";
 import { BreadcrumbItem, Breadcrumbs as NextUIBreadcrumbs } from "@heroui/react";
-import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { BreadcrumbsProps } from "@/const/types";
+import { usePathname } from "next/navigation";
 
 const Breadcrumbs = ({ className = "" }: BreadcrumbsProps) => {
     const pathname = usePathname();

@@ -7,9 +7,9 @@ import { capitalizeTitle } from "@/utils/capitalizeTitle";
 import { generatePageMetadata } from "@/utils/metadata";
 import { Metadata } from "next";
 import { headers } from "next/headers";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import ArticlesList from "./articlesList";
-import Link from "next/link";
 
 export async function generateMetadata({
   params,
@@ -32,14 +32,14 @@ export async function generateMetadata({
   const finalCanonical = canonicalUrl ?? (page > 1 ? `${pathname}?page=${page}` : pathname);
 
   return generatePageMetadata({
-    title: metaTitle || `${category} Articles | Advokattipset.no`,
-    description: metaDescription || `Read expert articles about ${category} on Advokattipset.no.`,
+    title: metaTitle || `${category} Articles | Meglertip.no`,
+    description: metaDescription || `Read expert articles about ${category} on Meglertip.no.`,
     path: finalCanonical,
-    keywords: metaKeywords ? metaKeywords.split(",")?.map((k: string) => k.trim()).filter(Boolean) : ["advokattipset", category, "real estate", "articles"],
+    keywords: metaKeywords ? metaKeywords.split(",")?.map((k: string) => k.trim()).filter(Boolean) : ["meglertip", category, "real estate", "articles"],
     type: ogType || "website",
     image: ogImage || null,
-    ogTitle: ogTitle || metaTitle || `${category} Articles | Advokattipset.no`,
-    ogDescription: ogDescription || metaDescription || `Explore helpful ${category} articles from Advokattipset.no.`,
+    ogTitle: ogTitle || metaTitle || `${category} Articles | Meglertip.no`,
+    ogDescription: ogDescription || metaDescription || `Explore helpful ${category} articles from Meglertip.no.`,
     canonicalUrl: finalCanonical,
     robots: robots || "index, follow",
     jsonLd: jsonLd || {
@@ -57,11 +57,9 @@ const ArticleCategoryPage = async ({ params, searchParams }: ArticleCategoryPage
   const category = param.category ?? "";
   const categorySlug = category; // <--- add this
   const heading = capitalizeTitle(category);
-
   const paramsObj = await searchParams;
   const page = parseInt(paramsObj?.page as string) || 1;
   const articlesPerPage = 8;
-
   const articlesData = await getCachedArticlesByCategory({
     categorySlug: category,
     page,
@@ -73,7 +71,11 @@ const ArticleCategoryPage = async ({ params, searchParams }: ArticleCategoryPage
 
   const categoriesData = await getCachedArticleCategories();
   const tabs = (categoriesData as any).data || [];
-  const categoriesHeading = 'ALL KATEGORIER';
+  const activeTab = tabs.find(
+    (tab: any) => tab.slug === categorySlug
+  );
+  const categoriesHeading = activeTab?.description ?? 'ALL KATEGORIER';
+
   return (
     <HomePage>
       <Breadcrumbs className="mt-8" />

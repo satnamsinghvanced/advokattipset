@@ -5,6 +5,7 @@ import { generatePageMetadata } from '@/utils/metadata';
 import NotFoundPage from '../not-found';
 import HomePage from '../page';
 import PartnerContent from './partnerContent';
+export const dynamic = 'force-static';
 
 async function getPartnerData() {
     const doc: any = await getCachedPartnerData();
@@ -13,22 +14,20 @@ async function getPartnerData() {
 
 export async function generateMetadata() {
     const partnerData = await getPartnerData();
-
     if (!partnerData) return;
 
     const { metaTitle, metaDescription, metaKeywords, metaImage, ogTitle, ogDescription, canonicalUrl, robots, jsonLd, publishedDate, lastUpdatedDate, subHeading, heading, ogImage, ogType, image, slug } = partnerData
-
     return generatePageMetadata({
         title: metaTitle || heading || "Partner",
-        description: metaDescription || subHeading || "Learn more about becoming a Advokattipset partner",
+        description: metaDescription || subHeading || "Learn more about becoming a Meglertip partner",
         path: slug || "/partner",
         keywords: metaKeywords
             ? metaKeywords.split(',')?.map((k: string) => k.trim()).filter(Boolean)
-            : ["partner", "advokattipset", "business", "collaboration"],
+            : ["partner", "meglertip", "business", "collaboration"],
         type: ogType || "website",
         image: metaImage || ogImage || image || null,
         ogTitle: ogTitle || metaTitle || heading || "Partner",
-        ogDescription: ogDescription || metaDescription || subHeading || "Join the Advokattipset network and collaborate with us",
+        ogDescription: ogDescription || metaDescription || subHeading || "Join the Meglertip network and collaborate with us",
         canonicalUrl: canonicalUrl || "/partner",
         robots: robots || "index, follow",
         jsonLd: jsonLd || {},
@@ -42,7 +41,6 @@ const PartnerPage = async () => {
     if (!partnerData) {
         return <NotFoundPage hideNavFooter={true} />;
     }
-
     const data = await getCachedHowItWordsData()
     const howItWorks = await JSON.parse(JSON.stringify(data));
 

@@ -27,7 +27,7 @@ const ArticleSecond = async ({
         </div>
       ) : (
         <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-12 max-w-7xl mx-auto mb-6" role="list">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-12 max-w-7xl mx-auto mb-6" role="list">
             {articlesData.slice(0, 4)?.map((item: any) => (
               <ArticlesCard
                 key={item.slug}

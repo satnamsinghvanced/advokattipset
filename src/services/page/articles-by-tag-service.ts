@@ -55,5 +55,5 @@ export const getCachedArticlesByTags = unstable_cache(
         }
     },
     ["articles-by-tags"],
-    { revalidate: 10 }
+    { revalidate: 120 }
 );

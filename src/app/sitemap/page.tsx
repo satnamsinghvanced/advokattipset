@@ -4,6 +4,7 @@ import { generatePageMetadata } from "@/utils/metadata";
 import NotFoundPage from "../not-found";
 import HomePage from "../page";
 import SiteMapContent from "./content";
+export const dynamic = 'force-static'; 
 
 async function getSiteMapData() {
     const doc: any = await getCachedSiteMapData();
@@ -16,16 +17,16 @@ export async function generateMetadata() {
     const { metaTitle, metaDescription, metaKeywords, metaImage, ogTitle, ogDescription, canonicalUrl, robots, jsonLd, publishedDate, lastUpdatedDate } = sitemapData
 
     return generatePageMetadata({
-        title: metaTitle || "Sitemap | Advokattipset.no",
-        description: metaDescription || "Overview of all pages on Advokattipset.no",
+        title: metaTitle || "Sitemap | Meglertip.no",
+        description: metaDescription || "Overview of all pages on Meglertip.no",
         path: "/sitemap",
         keywords: metaKeywords
             ? metaKeywords.split(',')?.map((k: string) => k.trim()).filter(Boolean)
-            : ["sitemap", "advokattipset", "website overview", "site structure", "pages"],
+            : ["sitemap", "meglertip", "website overview", "site structure", "pages"],
         type: "website",
         image: metaImage || null,
-        ogTitle: ogTitle || metaTitle || "Sitemap | Advokattipset.no",
-        ogDescription: ogDescription || metaDescription || "Explore all the pages on Advokattipset.no",
+        ogTitle: ogTitle || metaTitle || "Sitemap | Meglertip.no",
+        ogDescription: ogDescription || metaDescription || "Explore all the pages on Meglertip.no",
         canonicalUrl: canonicalUrl || "/sitemap",
         robots: robots || "index, follow",
         jsonLd: jsonLd || {},

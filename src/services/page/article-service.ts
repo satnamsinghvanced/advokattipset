@@ -52,7 +52,7 @@ export const getCachedArticleCategories = unstable_cache(
         }
     },
     ["article-categories"],
-    { revalidate: 10 } // cache for 1 minute
+    { revalidate: 120 } // cache for 1 minute
 );
 
 

@@ -1,7 +1,7 @@
 import { getCachedCountyData } from '@/services/data/county';
-import RegionSelector from './regionSelector';
 import { getCachedPlaceByCountySlug } from '@/services/data/getCachedPlaceByCountySlug';
 import { notFound } from 'next/navigation';
+import RegionSelector from './regionSelector';
 
 const RegionSelectorContainer = async ({ county }: any) => {
     const countyDoc = await getCachedCountyData(0);

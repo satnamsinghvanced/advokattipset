@@ -15,16 +15,16 @@ export async function generateMetadata() {
   const termsData = await getPageData()
   const { metaTitle, metaDescription, metaKeywords, metaImage, ogTitle, ogDescription, canonicalUrl, robots, jsonLd, publishedDate, lastUpdatedDate, title } = termsData
   return generatePageMetadata({
-    title: metaTitle || title || "Terms of Service | Advokattipset.no",
-    description: metaDescription || "Advokattipset.no terms of service page",
+    title: metaTitle || title || "Terms of Service | Meglertip.no",
+    description: metaDescription || "Meglertip.no terms of service page",
     path: "/terms",
     keywords: metaKeywords
       ? metaKeywords.split(',')?.map((k: string) => k.trim()).filter(Boolean)
-      : ["terms of service", "advokattipset", "legal", "user agreement", "terms and conditions"],
+      : ["terms of service", "meglertip", "legal", "user agreement", "terms and conditions"],
     type: "website",
     image: metaImage || null,
-    ogTitle: ogTitle || metaTitle || title || "Terms of Service | Advokattipset.no",
-    ogDescription: ogDescription || metaDescription || "Learn the terms of service for Advokattipset.no",
+    ogTitle: ogTitle || metaTitle || title || "Terms of Service | Meglertip.no",
+    ogDescription: ogDescription || metaDescription || "Learn the terms of service for Meglertip.no",
     canonicalUrl: canonicalUrl || "/terms",
     robots: robots || "index, follow",
     jsonLd: jsonLd || {},
@@ -35,7 +35,6 @@ export async function generateMetadata() {
 
 const TermsPage = async () => {
   const termsData = await getPageData()
-
   if (!termsData) {
     return <NotFoundPage />;
   }

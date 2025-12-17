@@ -10,6 +10,8 @@ async function getAboutData() {
   return await JSON.parse(JSON.stringify(doc));
 }
 
+export const dynamic = 'force-static';
+
 export async function generateMetadata() {
   const aboutData = await getAboutData();
   if (!aboutData) {
@@ -17,14 +19,14 @@ export async function generateMetadata() {
   }
   const { metaTitle, metaDescription, metaKeywords, metaImage, ogTitle, ogDescription, canonicalUrl, robots, jsonLd, publishedDate, lastUpdatedDate, slug, heading, subHeading, ogImage, ogType, image } = aboutData
   return generatePageMetadata({
-    title: metaTitle || heading || "About Advokattipset.no",
-    description: metaDescription || subHeading || "Learn more about Advokattipset.no",
+    title: metaTitle || heading || "About Meglertip.no",
+    description: metaDescription || subHeading || "Learn more about Meglertip.no",
     path: slug || "/about",
-    keywords: metaKeywords ? metaKeywords.split(',')?.map((k: string) => k.trim()).filter(Boolean) : ["about", "advokattipset", "real estate"],
+    keywords: metaKeywords ? metaKeywords.split(',')?.map((k: string) => k.trim()).filter(Boolean) : ["about", "meglertip", "real estate"],
     type: ogType || "website",
     image: metaImage || ogImage || image || null,
-    ogTitle: ogTitle || metaTitle || heading || "About Advokattipset.no",
-    ogDescription: ogDescription || metaDescription || subHeading || "Learn more about Advokattipset.no",
+    ogTitle: ogTitle || metaTitle || heading || "About Meglertip.no",
+    ogDescription: ogDescription || metaDescription || subHeading || "Learn more about Meglertip.no",
     canonicalUrl: canonicalUrl || "/about",
     robots: robots || "index, follow",
     jsonLd: jsonLd || {},

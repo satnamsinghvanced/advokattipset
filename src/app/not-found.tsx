@@ -36,12 +36,10 @@ const NotFoundPage = ({ hideNavFooter = false }: NotFoundPageProps) => {
                     </div>
                     :
                     <HomePage>
-
                         <div className="flex flex-col items-center justify-center my-36 ">
                             <p className='text-[90px] font-extrabold text-primary'>
                                 404
                             </p>
-
                             <h2 className="text-3xl font-semibold text-dark mb-4">
                                 Something&apos;s missing..
                             </h2>

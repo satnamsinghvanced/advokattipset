@@ -4,7 +4,6 @@ import { AllFaqCategory } from '@/const/types';
 import { Accordion, AccordionItem } from '@heroui/react';
 
 const AllFaqs = ({ faqData }: { faqData: AllFaqCategory[] }) => {
-    
     return (
         <div>
             {faqData?.map((category, index) => (

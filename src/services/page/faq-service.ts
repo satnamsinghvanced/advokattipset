@@ -28,7 +28,7 @@ export const getCachedLatestFAQs = unstable_cache(
         }
     },
     ['latest-faqs'],
-    { revalidate: 10 }
+    { revalidate: 120 }
 );
 
 
@@ -79,5 +79,5 @@ export const getCachedFAQs = unstable_cache(
         }
     },
     ['faqs-aggregated'],
-    { revalidate: 10 }
+    { revalidate: 120 }
 );

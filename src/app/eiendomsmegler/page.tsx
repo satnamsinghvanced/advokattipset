@@ -4,12 +4,8 @@ import { generatePageMetadata } from "@/utils/metadata";
 import type { Metadata } from "next";
 import HomePage from "../page";
 import EiendomsmeglerContent from "./content";
-
-interface EiendomsmeglerPageProps {
-    searchParams: {
-        [key: string]: string | string[] | undefined;
-    };
-}
+import { EiendomsmeglerPageProps } from "@/const/types";
+export const dynamic = 'force-static';
 
 const getRealestateAgentsData: any = async () => {
     const doc = await getCachedRealEstateData();
@@ -20,20 +16,20 @@ export async function generateMetadata(): Promise<Metadata> {
     const realestateAgents = await getRealestateAgentsData()
     const { metaTitle, metaDescription, metaKeywords, metaImage, ogTitle, ogDescription, canonicalUrl, robots, jsonLd, publishedDate, lastUpdatedDate, subHeading, heading, ogImage, ogType, bannerImage } = realestateAgents
     return generatePageMetadata({
-        title: metaTitle || heading || "Real Estate Agents | Advokattipset.no",
-        description: metaDescription || subHeading || "Welcome to Advokattipset.no — compare and find the best real estate agents in Norway.",
+        title: metaTitle || heading || "Real Estate Agents | Meglertip.no",
+        description: metaDescription || subHeading || "Welcome to Meglertip.no — compare and find the best real estate agents in Norway.",
         path: "/",
-        keywords: metaKeywords ? metaKeywords.split(",")?.map((k: string) => k.trim()).filter(Boolean) : ["advokattipset", "real estate", "agents", "compare"],
+        keywords: metaKeywords ? metaKeywords.split(",")?.map((k: string) => k.trim()).filter(Boolean) : ["meglertip", "real estate", "agents", "compare"],
         type: ogType || "website",
         image: metaImage || ogImage || bannerImage || null,
-        ogTitle: ogTitle || metaTitle || "Real Estate Agents | Advokattipset.no",
-        ogDescription: ogDescription || metaDescription || "Compare top real estate agents in Norway easily with Advokattipset.no.",
+        ogTitle: ogTitle || metaTitle || "Real Estate Agents | Meglertip.no",
+        ogDescription: ogDescription || metaDescription || "Compare top real estate agents in Norway easily with Meglertip.no.",
         canonicalUrl: canonicalUrl,
         robots: robots || "index, follow",
         jsonLd: jsonLd || {
             "@context": "https://schema.org",
             "@type": "WebSite",
-            name: "Advokattipset.no",
+            name: "Meglertip.no",
         },
         publishedDate: publishedDate,
         lastUpdatedDate: lastUpdatedDate,
@@ -42,14 +38,8 @@ export async function generateMetadata(): Promise<Metadata> {
 
 const EiendomsmeglerPage = async ({ searchParams }: EiendomsmeglerPageProps) => {
     const params = await searchParams;
-
     const county = params?.county || 'oslo';
     const cp = params?.cp;
-
-    console.log('searchParams:-- ', params);
-    console.log('county:-- ', county);
-    console.log('cp:-- ', cp);
-
     const realestateAgents = await getRealestateAgentsData();
 
     return (

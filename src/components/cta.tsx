@@ -1,6 +1,6 @@
 import RedirectButton from "./global/redirectButton";
 
-const Cta = ({ header }: any) => { 
+const Cta = ({ header }: any) => {
   return (
     <div className="relative py-8 sm:py-12 lg:py-20 bg-cover bg-center bg-footerbg lg:px-4">
       <div className="relative z-8 flex flex-col justify-center items-center h-full text-center text-background px-4">

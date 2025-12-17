@@ -8,9 +8,13 @@ import { getCachedCityBySlugData } from "@/services/data/getPlaceBySlug-service"
 import { getCachedLatestFAQs } from "@/services/page/faq-service";
 import { formatData } from "@/utils/formatData";
 import Image from "next/image";
-import { notFound } from 'next/navigation';
+import { notFound } from "next/navigation";
 
-const SlugContent = async ({ slug, county, searchParams }: SlugContentProps) => {
+const SlugContent = async ({
+  slug,
+  county,
+  searchParams,
+}: SlugContentProps) => {
   const latestFAQsDoc = await getCachedLatestFAQs();
   const latestFAQs = await JSON.parse(JSON.stringify(latestFAQsDoc));
   const faqSectionProps: FAQSectionProps = {
@@ -25,16 +29,19 @@ const SlugContent = async ({ slug, county, searchParams }: SlugContentProps) => 
     chevronColor: "text-primary",
   };
 
-  const doc = await getCachedCityBySlugData(slug || '')
+  const doc = await getCachedCityBySlugData(slug || "");
   const placeData = await JSON.parse(JSON.stringify(doc));
 
   if (!placeData.data) {
     notFound();
   }
 
-  //NOTE: dom't remove this variable, company images will be shown here from googlr drive 
-  const companyImageUrl = `${placeData?.data?.companyImage}` || '/images/realEstate.webp';
-
+  //NOTE: dom't remove this variable, company images will be shown here from google drive
+  const companyImageUrl =
+    `${placeData?.data?.companyImage}` || "/images/realEstate.webp";
+  const companies = Array.isArray(placeData.data.companies)
+    ? placeData.data.companies
+    : [];
   return (
     <>
       <div className="w-full flex gap-8 flex-row max-md:flex-col">
@@ -51,14 +58,21 @@ const SlugContent = async ({ slug, county, searchParams }: SlugContentProps) => 
           )}
           <Heading
             className="!text-[64px] max-lg:!text-[36px] font-bold text-primary leading-10 lg:leading-18 pr-3"
-            heading={`${(placeData?.data?.title || placeData?.data?.companyName) || ''}`}
+            heading={`${placeData?.data?.title || placeData?.data?.companyName || ""
+              }`}
           ></Heading>
           <div
-            dangerouslySetInnerHTML={{ __html: formatData(placeData.data?.description) || "" }}
+            dangerouslySetInnerHTML={{
+              __html: formatData(placeData.data?.description) || "",
+            }}
             className="eiendomsmegler-content"
           ></div>
           <div className="mb-8">
-            <CompanyContent searchParams={searchParams} cp={searchParams.cp} />
+            <CompanyContent
+              // searchParams={searchParams}
+              // cp={searchParams.cp}
+              com_data={companies}
+            />
           </div>
           <RegionSelectorContener county={county} />
           <FAQSection {...faqSectionProps} className="w-full" />

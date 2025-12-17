@@ -1,10 +1,10 @@
 import HomePage from "@/app/page";
 import Breadcrumbs from "@/components/global/breadcrumbs";
 import { getCachedCityBySlugData } from "@/services/data/getPlaceBySlug-service";
+import { capitalizeTitle } from "@/utils/capitalizeTitle";
 import { generatePageMetadata } from "@/utils/metadata";
 import type { Metadata } from "next";
 import SlugContent from "./content";
-import { capitalizeTitle } from "@/utils/capitalizeTitle";
 
 interface SlugPageProps {
   params: {
@@ -15,7 +15,6 @@ interface SlugPageProps {
   };
 }
 
-
 export async function generateMetadata({ params, searchParams }: SlugPageProps): Promise<Metadata> {
   const param: any = await searchParams
   const rawSlug = await params
@@ -24,29 +23,34 @@ export async function generateMetadata({ params, searchParams }: SlugPageProps):
   const doc = await getCachedCityBySlugData(slugValue)
   const placeData = await JSON.parse(JSON.stringify(doc));
 
+  if (!placeData?.data) {
+    return {
+      title: "Eiendomsmegler – Meglertip",
+      description: "Finn eiendomsmeglere i ditt område",
+    };
+  }
   const { metaTitle, metaDescription, metaKeywords, metaImage, ogTitle, ogDescription, canonicalUrl, robots, jsonLd, publishedDate, lastUpdatedDate, subHeading, heading, ogImage, ogType, bannerImage, slug } = placeData.data
 
   return generatePageMetadata({
-    title: metaTitle || slug || heading || `${title} | Advokattipset.no`,
-    description: metaDescription || subHeading || "Welcome to Advokattipset.no — compare and find the best real estate agents in Norway.",
+    title: metaTitle || slug || heading || `${title} | Meglertip.no`,
+    description: metaDescription || subHeading || "Welcome to Meglertip.no — compare and find the best real estate agents in Norway.",
     path: "/",
-    keywords: metaKeywords ? metaKeywords.split(",")?.map((k: string) => k.trim()).filter(Boolean) : ["advokattipset", "real estate", "agents", "compare"],
+    keywords: metaKeywords ? metaKeywords.split(",")?.map((k: string) => k.trim()).filter(Boolean) : ["meglertip", "real estate", "agents", "compare"],
     type: ogType || "website",
     image: metaImage || ogImage || bannerImage || null,
-    ogTitle: ogTitle || metaTitle || `${title} | Advokattipset.no`,
-    ogDescription: ogDescription || metaDescription || "Compare top real estate agents in Norway easily with Advokattipset.no.",
+    ogTitle: ogTitle || metaTitle || `${title} | Meglertip.no`,
+    ogDescription: ogDescription || metaDescription || "Compare top real estate agents in Norway easily with Meglertip.no.",
     canonicalUrl: `/eiendomsmegler/${canonicalUrl}`,
     robots: robots || "index, follow",
     jsonLd: jsonLd || {
       "@context": "https://schema.org",
       "@type": "WebSite",
-      name: "Advokattipset.no",
+      name: "Meglertip.no",
     },
     publishedDate: publishedDate,
     lastUpdatedDate: lastUpdatedDate,
   });
 }
-
 
 const SlugPage = async ({ params, searchParams }: SlugPageProps) => {
   const searchParam = await searchParams
