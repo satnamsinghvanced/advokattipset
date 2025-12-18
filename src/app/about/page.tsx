@@ -19,14 +19,14 @@ export async function generateMetadata() {
   }
   const { metaTitle, metaDescription, metaKeywords, metaImage, ogTitle, ogDescription, canonicalUrl, robots, jsonLd, publishedDate, lastUpdatedDate, slug, heading, subHeading, ogImage, ogType, image } = aboutData
   return generatePageMetadata({
-    title: metaTitle || heading || "About Meglertip.no",
-    description: metaDescription || subHeading || "Learn more about Meglertip.no",
+    title: metaTitle || heading || "About Byggtipset.no",
+    description: metaDescription || subHeading || "Learn more about Byggtipset.no",
     path: slug || "/about",
-    keywords: metaKeywords ? metaKeywords.split(',')?.map((k: string) => k.trim()).filter(Boolean) : ["about", "meglertip", "real estate"],
+    keywords: metaKeywords ? metaKeywords.split(',')?.map((k: string) => k.trim()).filter(Boolean) : ["about", "byggtipset", "real estate"],
     type: ogType || "website",
     image: metaImage || ogImage || image || null,
-    ogTitle: ogTitle || metaTitle || heading || "About Meglertip.no",
-    ogDescription: ogDescription || metaDescription || subHeading || "Learn more about Meglertip.no",
+    ogTitle: ogTitle || metaTitle || heading || "About Byggtipset.no",
+    ogDescription: ogDescription || metaDescription || subHeading || "Learn more about Byggtipset.no",
     canonicalUrl: canonicalUrl || "/about",
     robots: robots || "index, follow",
     jsonLd: jsonLd || {},

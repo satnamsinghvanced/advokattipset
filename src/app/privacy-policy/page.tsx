@@ -17,16 +17,16 @@ export async function generateMetadata() {
     const { metaTitle, metaDescription, metaKeywords, metaImage, ogTitle, ogDescription, canonicalUrl, robots, jsonLd, publishedDate, lastUpdatedDate, title } = privacyPolicyData
 
     return generatePageMetadata({
-        title: metaTitle || title || "Privacy Policy | Meglertip.no",
-        description: metaDescription || "Meglertip.no privacy policy page",
+        title: metaTitle || title || "Privacy Policy | Byggtipset.no",
+        description: metaDescription || "Byggtipset.no privacy policy page",
         path: "/privacy-policy",
         keywords: metaKeywords
             ? metaKeywords.split(',')?.map((k: string) => k.trim()).filter(Boolean)
-            : ["privacy policy", "meglertip", "terms and conditions", "data privacy", "user data"],
+            : ["privacy policy", "Byggtipset", "terms and conditions", "data privacy", "user data"],
         type: "website",
         image: metaImage || null,
-        ogTitle: ogTitle || metaTitle || title || "Privacy Policy | Meglertip.no",
-        ogDescription: ogDescription || metaDescription || "Learn how Meglertip.no protects your privacy and handles your personal information.",
+        ogTitle: ogTitle || metaTitle || title || "Privacy Policy | Byggtipset.no",
+        ogDescription: ogDescription || metaDescription || "Learn how Byggtipset.no protects your privacy and handles your personal information.",
         canonicalUrl: canonicalUrl || "/privacy-policy",
         robots: robots || "index, follow",
         jsonLd: jsonLd || {},

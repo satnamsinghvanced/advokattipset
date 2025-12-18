@@ -15,16 +15,16 @@ export async function generateMetadata() {
   const termsData = await getPageData()
   const { metaTitle, metaDescription, metaKeywords, metaImage, ogTitle, ogDescription, canonicalUrl, robots, jsonLd, publishedDate, lastUpdatedDate, title } = termsData
   return generatePageMetadata({
-    title: metaTitle || title || "Terms of Service | Meglertip.no",
-    description: metaDescription || "Meglertip.no terms of service page",
+    title: metaTitle || title || "Terms of Service | Byggtipset.no",
+    description: metaDescription || "Byggtipset.no terms of service page",
     path: "/terms",
     keywords: metaKeywords
       ? metaKeywords.split(',')?.map((k: string) => k.trim()).filter(Boolean)
-      : ["terms of service", "meglertip", "legal", "user agreement", "terms and conditions"],
+      : ["terms of service", "Byggtipset", "legal", "user agreement", "terms and conditions"],
     type: "website",
     image: metaImage || null,
-    ogTitle: ogTitle || metaTitle || title || "Terms of Service | Meglertip.no",
-    ogDescription: ogDescription || metaDescription || "Learn the terms of service for Meglertip.no",
+    ogTitle: ogTitle || metaTitle || title || "Terms of Service | Byggtipset.no",
+    ogDescription: ogDescription || metaDescription || "Learn the terms of service for Byggtipset.no",
     canonicalUrl: canonicalUrl || "/terms",
     robots: robots || "index, follow",
     jsonLd: jsonLd || {},

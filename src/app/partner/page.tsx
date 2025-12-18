@@ -19,15 +19,15 @@ export async function generateMetadata() {
     const { metaTitle, metaDescription, metaKeywords, metaImage, ogTitle, ogDescription, canonicalUrl, robots, jsonLd, publishedDate, lastUpdatedDate, subHeading, heading, ogImage, ogType, image, slug } = partnerData
     return generatePageMetadata({
         title: metaTitle || heading || "Partner",
-        description: metaDescription || subHeading || "Learn more about becoming a Meglertip partner",
+        description: metaDescription || subHeading || "Learn more about becoming a Byggtipset partner",
         path: slug || "/partner",
         keywords: metaKeywords
             ? metaKeywords.split(',')?.map((k: string) => k.trim()).filter(Boolean)
-            : ["partner", "meglertip", "business", "collaboration"],
+            : ["partner", "byggtipset", "business", "collaboration"],
         type: ogType || "website",
         image: metaImage || ogImage || image || null,
         ogTitle: ogTitle || metaTitle || heading || "Partner",
-        ogDescription: ogDescription || metaDescription || subHeading || "Join the Meglertip network and collaborate with us",
+        ogDescription: ogDescription || metaDescription || subHeading || "Join the Byggtipset network and collaborate with us",
         canonicalUrl: canonicalUrl || "/partner",
         robots: robots || "index, follow",
         jsonLd: jsonLd || {},

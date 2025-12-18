@@ -17,16 +17,16 @@ export async function generateMetadata() {
     const { metaTitle, metaDescription, metaKeywords, metaImage, ogTitle, ogDescription, canonicalUrl, robots, jsonLd, publishedDate, lastUpdatedDate } = sitemapData
 
     return generatePageMetadata({
-        title: metaTitle || "Sitemap | Meglertip.no",
-        description: metaDescription || "Overview of all pages on Meglertip.no",
+        title: metaTitle || "Sitemap | Byggtipset.no",
+        description: metaDescription || "Overview of all pages on Byggtipset.no",
         path: "/sitemap",
         keywords: metaKeywords
             ? metaKeywords.split(',')?.map((k: string) => k.trim()).filter(Boolean)
-            : ["sitemap", "meglertip", "website overview", "site structure", "pages"],
+            : ["sitemap", "Byggtipset", "website overview", "site structure", "pages"],
         type: "website",
         image: metaImage || null,
-        ogTitle: ogTitle || metaTitle || "Sitemap | Meglertip.no",
-        ogDescription: ogDescription || metaDescription || "Explore all the pages on Meglertip.no",
+        ogTitle: ogTitle || metaTitle || "Sitemap | Byggtipset.no",
+        ogDescription: ogDescription || metaDescription || "Explore all the pages on Byggtipset.no",
         canonicalUrl: canonicalUrl || "/sitemap",
         robots: robots || "index, follow",
         jsonLd: jsonLd || {},

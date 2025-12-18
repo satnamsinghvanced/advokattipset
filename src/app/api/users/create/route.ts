@@ -748,7 +748,7 @@ async function sendMailToPartners(
         const html = generatePartnerEmail(partner, userValues, activeTemplate);
 
         const mailOptions = {
-          from: `"Meglertip Lead" <${smtpData.user}>`,
+          from: `"Byggtipset Lead" <${smtpData.user}>`,
           to: partner.email,
           subject: activeTemplate.subject,
           html: html,

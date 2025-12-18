@@ -21,6 +21,7 @@ export default async function HeroPage() {
     howDoesItworksCards,
     ourArticlesHeading,
     whyChooseMeglertipHeading,
+    howDoesItworks,
     prosSection,
     citySectionHeading,
     articlesHeading,
@@ -71,7 +72,7 @@ export default async function HeroPage() {
         <HowItWorks
           cards={howDoesItworksCards}
           flex={true}
-          title={whyChooseMeglertipHeading.heading}
+          title={howDoesItworks.heading}
         />
         <Article heading={ourArticlesHeading.heading || ""} />
         <HowItWorks

@@ -12,7 +12,7 @@ const Banner = async ({ BannerData }: any) => {
       <div className="absolute inset-0">
         <Image
           src={backgroundUrl}
-          alt="meglertip banner"
+          alt="Byggtipset banner"
           fill
           className="object-cover max-h-[2000px]"
           priority

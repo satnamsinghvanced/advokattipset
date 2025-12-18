@@ -32,14 +32,14 @@ export async function generateMetadata({
   const finalCanonical = canonicalUrl ?? (page > 1 ? `${pathname}?page=${page}` : pathname);
 
   return generatePageMetadata({
-    title: metaTitle || `${category} Articles | Meglertip.no`,
-    description: metaDescription || `Read expert articles about ${category} on Meglertip.no.`,
+    title: metaTitle || `${category} Articles | Byggtipset.no`,
+    description: metaDescription || `Read expert articles about ${category} on Byggtipset.no.`,
     path: finalCanonical,
-    keywords: metaKeywords ? metaKeywords.split(",")?.map((k: string) => k.trim()).filter(Boolean) : ["meglertip", category, "real estate", "articles"],
+    keywords: metaKeywords ? metaKeywords.split(",")?.map((k: string) => k.trim()).filter(Boolean) : ["byggtipset", category, "real estate", "articles"],
     type: ogType || "website",
     image: ogImage || null,
-    ogTitle: ogTitle || metaTitle || `${category} Articles | Meglertip.no`,
-    ogDescription: ogDescription || metaDescription || `Explore helpful ${category} articles from Meglertip.no.`,
+    ogTitle: ogTitle || metaTitle || `${category} Articles | Byggtipset.no`,
+    ogDescription: ogDescription || metaDescription || `Explore helpful ${category} articles from Byggtipset.no.`,
     canonicalUrl: finalCanonical,
     robots: robots || "index, follow",
     jsonLd: jsonLd || {

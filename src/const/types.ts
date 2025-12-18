@@ -76,7 +76,7 @@ export interface Articles {
   title: string;
   id?: string | number;
   image?: string;
-  date?: string;
+  showDate?: string;
   href?: string;
   slug?: string;
   categoryId?: any;

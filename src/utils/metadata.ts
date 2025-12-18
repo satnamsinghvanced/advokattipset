@@ -69,8 +69,8 @@ export async function generatePageMetadata({
     };
 
     const ogImageUrl = image ? getImageUrl(image) : `${cleanBase}/images/og-default.jpg`;
-    const pageTitle = title ? (title == 'Meglertip.no' ? `Meglertip.no` : `${title} |  Meglertip.no`) : ' Meglertip.no';
-    const ogFinalTitle = ogTitle ? `${ogTitle} | Meglertip.no` : pageTitle;
+    const pageTitle = title ? (title == 'Byggtipset.no' ? `Byggtipset.no` : `${title} |  Byggtipset.no`) : ' Byggtipset.no';
+    const ogFinalTitle = ogTitle ? `${ogTitle} | Byggtipset.no` : pageTitle;
     const ogFinalDescription = ogDescription || description;
 
     const openGraphImages = [
@@ -122,7 +122,7 @@ export async function generatePageMetadata({
             title: ogFinalTitle,
             description: ogFinalDescription,
             url: canonicalUrl || `${cleanBase}${pathname}`,
-            siteName: "Meglertip.no",
+            siteName: "Byggtipset.no",
             type,
             images: openGraphImages,
             ...dates,

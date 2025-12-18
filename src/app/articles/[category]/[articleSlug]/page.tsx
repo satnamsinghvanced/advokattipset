@@ -15,14 +15,14 @@ export async function generateMetadata({ params }: SlugPageProps) {
   const { metaTitle, metaDescription, ogType, metaKeywords, ogImage, ogTitle, ogDescription, canonicalUrl, robots, jsonLd, publishedDate, lastUpdatedDate, } = article ?? {};
 
   return generatePageMetadata({
-    title: metaTitle || ` | Meglertip.no`,
-    description: metaDescription || `Read expert articles about ${title} on Meglertip.no.`,
+    title: metaTitle || ` | Byggtipset.no`,
+    description: metaDescription || `Read expert articles about ${title} on Byggtipset.no.`,
     path: `articles/${articleCategory}/${canonicalUrl}`,
-    keywords: metaKeywords ? metaKeywords.split(",")?.map((k: string) => k.trim()).filter(Boolean) : ["meglertip", "real estate", "articles"],
+    keywords: metaKeywords ? metaKeywords.split(",")?.map((k: string) => k.trim()).filter(Boolean) : ["byggtipset", "real estate", "articles"],
     type: ogType || "website",
     image: ogImage || null,
-    ogTitle: ogTitle || metaTitle || `${title} | Meglertip.no`,
-    ogDescription: ogDescription || metaDescription || `Explore helpful ${title} articles from Meglertip.no.`,
+    ogTitle: ogTitle || metaTitle || `${title} | Byggtipset.no`,
+    ogDescription: ogDescription || metaDescription || `Explore helpful ${title} articles from Byggtipset.no.`,
     canonicalUrl: `/articles/${articleCategory}/${canonicalUrl}`,
     robots: robots || "index, follow",
     jsonLd: jsonLd || {
