@@ -36,7 +36,7 @@ const Guides = ({ data }: any) => {
         <RedirectButton
           className="bg-primary text-background text-[16px] max-sm:w-full !py-[12px] !px-[90px]"
           text={data.buttonText}
-          redirect={data.ctaLink}
+          redirect={`${data.ctaLink || '/eiendomsmegler'}#region-selector`}
         />
       </div>
     </div>

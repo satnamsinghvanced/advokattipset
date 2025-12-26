@@ -21,21 +21,22 @@ const LatestInsights = ({ articlesHeading, data }: any) => {
             <h2 className="text-primary font-semibold leading-tight lg:text-5xl text-[36px] mb-8">
                 {articlesHeading.heading}
             </h2>
-        
+
             <div
                 className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10 max-w-6xl mx-auto"
                 role="list"
                 aria-label="Latest insights articles"
             >
                 {data &&
-                    data.slice(0, 4).map(
+                    data?.slice(0, 4)?.map(
                         ({ title, slug, image, showDate, categoryId }: Articles) => (
                             <LatestInsightsCard
                                 key={slug}
                                 image={image ?? ''}
-                                date={formatDate(showDate) }
+                                date={formatDate(showDate)}
                                 title={title}
-                                href={`articles/${categoryId.slug}/${slug}`}
+                                // href={`articles/${categoryId.slug}/${slug}`}
+                                href={`${categoryId?.slug && slug ? `articles/${categoryId?.slug}/${slug}` : 'articles'}`}
                                 role="listitem"
                             />
                         )
@@ -44,8 +45,8 @@ const LatestInsights = ({ articlesHeading, data }: any) => {
 
             <div className="mt-10 max-sm:px-4">
                 <RedirectButton
-                    text={articlesHeading.buttonText}
-                    redirect={articlesHeading.ctaLink}
+                    text={articlesHeading?.buttonText}
+                    redirect={articlesHeading?.ctaLink}
                 />
             </div>
         </div>

@@ -9,7 +9,7 @@ import {
   CollaboratePartner as Partner,
   PartnerLimit,
   SmtpConfig,
-  User
+  User,
 } from "@/lib/models/models";
 import { connectDB } from "@/lib/mongoose";
 import { getTimeAgo } from "@/utils/getTimeAgo";
@@ -17,6 +17,7 @@ import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 
 let MAX_PARTNERS: any = 0;
+let uniqueId: number = 0;
 export async function POST(req: Request) {
   try {
     await connectDB();
@@ -35,7 +36,7 @@ export async function POST(req: Request) {
       { new: true, upsert: true }
     );
 
-    const uniqueId = counter.count;
+    uniqueId = counter.count;
     const userValues = userFields[0]?.values || {};
     const timeDuration = getTimeAgo("2s");
     const userEmail = userValues.email;
@@ -95,7 +96,7 @@ export async function POST(req: Request) {
       userValues: userValues,
       ip: ipAddress,
     });
-
+    const userUniqueId = user.uniqueId;
     const partners = await CollaboratePartner.find({ isActive: true });
     console.log(`Total active partners: ${partners.length}`);
 
@@ -123,18 +124,14 @@ export async function POST(req: Request) {
       };
       postalMatchLog.push(logEntry);
 
-      console.log(
-        `  ${partner.name}: ${matches ? "MATCHES" : "NO MATCH"}`
-      );
+      console.log(`  ${partner.name}: ${matches ? "MATCHES" : "NO MATCH"}`);
       if (matches) {
         postalFiltered.push(partner);
       }
     }
 
     partnerArray = postalFiltered;
-    console.log(
-      `After postal code matching: ${partnerArray.length} partners`
-    );
+    console.log(`After postal code matching: ${partnerArray.length} partners`);
 
     console.log("\n========== STEP 2: WISHES EXACT MATCHING ==========");
 
@@ -158,8 +155,7 @@ export async function POST(req: Request) {
       console.log(`\n  Checking wishes for ${partner.name}:`);
       console.log(`    Wishes: ${JSON.stringify(partner.wishes)}`);
       console.log(
-        `    Result: ${matches ? "ALL WISHES MATCH" : "WISHES NOT MATCHED"
-        }`
+        `    Result: ${matches ? "ALL WISHES MATCH" : "WISHES NOT MATCHED"}`
       );
       if (matches) {
         wishesFiltered.push(partner);
@@ -187,7 +183,8 @@ export async function POST(req: Request) {
       limitCheckLog.push(logEntry);
 
       console.log(
-        `  ${partner.name}: ${limitReached ? "LIMIT REACHED" : "LIMIT AVAILABLE"
+        `  ${partner.name}: ${
+          limitReached ? "LIMIT REACHED" : "LIMIT AVAILABLE"
         }`
       );
       if (!limitReached) {
@@ -196,9 +193,7 @@ export async function POST(req: Request) {
     }
 
     partnerArray = limitFiltered;
-    console.log(
-      `After monthly limit check: ${partnerArray.length} partners`
-    );
+    console.log(`After monthly limit check: ${partnerArray.length} partners`);
 
     console.log("\n========== STEP 4-6: PRIORITY SORTING ==========");
 
@@ -223,17 +218,23 @@ export async function POST(req: Request) {
         sortingLog.push(logEntry);
 
         console.log(
-          `  ${p.name}: Premium=${p.isPremium}, LastMonthLeads=${p.lastMonthLeads || 0
+          `  ${p.name}: Premium=${p.isPremium}, LastMonthLeads=${
+            p.lastMonthLeads || 0
           }, Created=${new Date(p.createdAt).toLocaleDateString()}`
         );
       });
 
       partnerArray = sortPartnersByPriority(partnerArray);
 
+      // partner filter : first which have max leads last month
+      partnerArray.sort((a, b) => (b.leads?.lastMonth ?? 0) - (a.leads?.lastMonth ?? 0));
+      // console.log(`partnerArray after sorting:--- ${partnerArray}`)
+
       console.log("\nAfter sorting (in priority order):");
       partnerArray.forEach((p, i) => {
         console.log(
-          `  ${i + 1}. ${p.name}: Premium=${p.isPremium}, LastMonthLeads=${p.lastMonthLeads || 0
+          `  ${i + 1}. ${p.name}: Premium=${p.isPremium}, LastMonthLeads=${
+            p.lastMonthLeads || 0
           }, Created=${new Date(p.createdAt).toLocaleDateString()}`
         );
       });
@@ -401,11 +402,32 @@ export async function POST(req: Request) {
     console.log(`Log structure: ${Object.keys(comprehensiveLog).join(", ")}`);
 
     console.log("\n========== UPDATING USER RECORD ==========");
+    const formId: string | null = userFields?.[0]?.formId ?? null;
+
+    let totalProfit = 0;
+
+    const partnerWithPrice = selectedPartners.map((partner) => {
+      let leadPrice = 0;
+
+      const matchedLeadType = partner.leadTypes?.find(
+        (lt: any) => lt.typeId?.toString() === formId?.toString()
+      );
+
+      if (matchedLeadType) {
+        leadPrice = matchedLeadType.price;
+      }
+
+      totalProfit += leadPrice;
+
+      return {
+        partnerId: partner._id,
+        leadPrice: leadPrice,
+      };
+    });
 
     const updateData: any = {
-      partnerIds: selectedPartners?.map((p) => p._id),
-      // partnerEmails: partnerEmailsData,
-      // leadTypes: leadTypesData,
+      partnerIds: partnerWithPrice,
+      profit: totalProfit,
       status: "Pending",
       log: logString,
       logSummary,
@@ -422,13 +444,24 @@ export async function POST(req: Request) {
 
     let emailResults = [];
     let finalStatus = "Pending";
+    if (selectedPartners.length === 0) {
+      finalStatus = "Reject";
 
+      await User.findByIdAndUpdate(user._id, {
+        status: "Reject",
+        rejectionReason: "No matching partners found",
+        emailSentAt: new Date(),
+      });
+
+      console.log("No partners found → Lead rejected");
+    }
     if (selectedPartners.length > 0) {
       console.log("\n========== SENDING EMAILS TO PARTNERS ==========");
       emailResults = await sendMailToPartners(
         selectedPartners,
         userValues,
-        partnerEmailsData
+        partnerEmailsData,
+        userUniqueId
       );
 
       // Check if at least one email was sent successfully
@@ -461,11 +494,46 @@ export async function POST(req: Request) {
     }
 
     // Final update to user document with email results and final status
-    await User.findByIdAndUpdate(user._id, {
-      partnerEmails: emailResults,
-      status: finalStatus,
-      emailSentAt: new Date(), // Add timestamp for when emails were sent
-    });
+    await User.findByIdAndUpdate(
+      user._id,
+      {
+        $set: {
+          emailResults: emailResults.map((r) => ({
+            partnerId: r.partnerId,
+            email: r.email,
+            status: r.status,
+            sentAt: r.sentAt || new Date(),
+            error: r.error || null,
+          })),
+          status: finalStatus,
+
+        },
+      },
+      { new: true, runValidators: true }
+    );
+
+    let leadEmailResult = null;
+
+    if (selectedPartners.length > 0) {
+      try {
+        console.log("\n========== SENDING EMAIL TO LEAD ==========");
+
+        const leadTemplate = await getLeadEmailTemplate();
+
+        leadEmailResult = await sendMailToLead(
+          userValues,
+
+          selectedPartners,
+          uniqueId
+        );
+
+        console.log("Lead email sent:", leadEmailResult);
+      } catch (err: any) {
+        console.error("Lead email failed:", err.message);
+      }
+    } else {
+      console.log("No partners found → Lead email not sent");
+    }
 
     console.log("\n========== PROCESSING COMPLETE ==========");
     console.log(`Final user status: ${finalStatus}`);
@@ -642,16 +710,24 @@ const isWishesMatch = (partner: any, userValues: any) => {
 /**
  * STEP 3: Monthly limit check
  */
+// function isMonthlyLimitReached(partner: any): boolean {
+//   // If no maxLeadsPerMonth is set, assume no limit
+//   if (!partner.maxLeadsPerMonth) {
+//     return false;
+//   }
+
+//   const currentMonthLeads = partner.leads?.currentMonth || 0;
+//   const maxLeads = partner.maxLeadsPerMonth;
+
+//   return currentMonthLeads >= maxLeads;
+// }
 function isMonthlyLimitReached(partner: any): boolean {
-  // If no maxLeadsPerMonth is set, assume no limit
-  if (!partner.maxLeadsPerMonth) {
-    return false;
-  }
+  const monthlyLimit = partner.leads?.total || 0;
 
-  const currentMonthLeads = partner.leads?.currentMonth || 0;
-  const maxLeads = partner.maxLeadsPerMonth;
+  // 0 = unlimited
+  if (monthlyLimit === 0) return false;
 
-  return currentMonthLeads >= maxLeads;
+  return (partner.leads?.currentMonth || 0) >= monthlyLimit;
 }
 
 /**
@@ -683,21 +759,29 @@ function sortPartnersByPriority(partners: any[]): any[] {
 /**
  * Update partner leads count
  */
-async function updatePartnerLeadsCount(partners: any[]) {
-  const updatePromises = partners?.map((partner) =>
-    Partner.findByIdAndUpdate(
-      partner._id,
-      {
-        $inc: {
-          "leads.currentMonth": 1,
-          "leads.total": 1,
-        },
-      },
-      { new: true }
-    )
-  );
+// async function updatePartnerLeadsCount(partners: any[]) {
+//   const updatePromises = partners?.map((partner) =>
+//     Partner.findByIdAndUpdate(
+//       partner._id,
+//       {
+//         $inc: {
+//           "leads.currentMonth": 1,
+//           "leads.total": 1,
+//         },
+//       },
+//       { new: true }
+//     )
+//   );
 
-  await Promise.all(updatePromises);
+//   await Promise.all(updatePromises);
+// }
+async function updatePartnerLeadsCount(partners: any[]) {
+  await Partner.updateMany(
+    { _id: { $in: partners.map(p => p._id) } },
+    {
+      $inc: { "leads.currentMonth": 1 },
+    }
+  );
 }
 
 /**
@@ -706,7 +790,8 @@ async function updatePartnerLeadsCount(partners: any[]) {
 async function sendMailToPartners(
   partners: any[],
   userValues: any,
-  partnerEmailsData: any[]
+  partnerEmailsData: any[],
+  userUniqueId: number
 ) {
   if (!partners.length) {
     return partnerEmailsData;
@@ -745,10 +830,15 @@ async function sendMailToPartners(
       const emailData = partnerEmailsData[i];
 
       try {
-        const html = generatePartnerEmail(partner, userValues, activeTemplate);
+        const html = generatePartnerEmail(
+          partner,
+          userValues,
+          activeTemplate,
+          userUniqueId
+        );
 
         const mailOptions = {
-          from: `"Byggtipset Lead" <${smtpData.user}>`,
+          from: `"Advokattipset Lead" <${smtpData.user}>`,
           to: partner.email,
           subject: activeTemplate.subject,
           html: html,
@@ -793,11 +883,105 @@ async function getActiveEmailTemplate() {
   return activeTemplate;
 }
 
+async function getLeadEmailTemplate() {
+  const template = await EmailTemplate.findOne({
+    name: "To the lead when they complete a form",
+  });
+
+  if (!template) {
+    throw new Error("Lead email template not found or inactive");
+  }
+
+  return template;
+}
+
+function generateLeadEmail(
+  userValues: any,
+  template: any,
+  partners: any[],
+  uniqueId: number
+) {
+  let emailBody = template.body;
+
+  const partnerNames = partners
+    .map((p) => p.name || p.companyName)
+    .filter(Boolean);
+
+  const placeholders: Record<string, string> = {
+    "[partner 1]": partnerNames[0] || "",
+    "[Full name]": userValues.name || "User",
+    "[partner 2]": partnerNames[1] || "",
+    "[partner 3]": partnerNames[2] || "",
+    "[Id]": uniqueId?.toString() || "N/A",
+  };
+
+  Object.entries(placeholders).forEach(([key, value]) => {
+    const regex = new RegExp(key.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g");
+    emailBody = emailBody.replace(regex, value);
+  });
+
+  return emailBody;
+}
+
+async function sendMailToLead(
+  userValues: any,
+  selectedPartners: any[],
+  uniqueId: number
+) {
+  if (!userValues?.email) {
+    console.log("No user email found, skipping lead email");
+    return null;
+  }
+
+  const smtpData = await SmtpConfig.findOne();
+  if (!smtpData) {
+    throw new Error("No SMTP configuration found");
+  }
+
+  const template = await getLeadEmailTemplate();
+
+  const transporter = nodemailer.createTransport({
+    host: smtpData.host,
+    port: smtpData.port,
+    secure: smtpData.secure,
+    auth: {
+      user: smtpData.user,
+      pass: smtpData.pass,
+    },
+  });
+
+  await transporter.verify();
+
+  const html = generateLeadEmail(
+    userValues,
+    template,
+    selectedPartners,
+    uniqueId
+  );
+
+  const mailOptions = {
+    from: `"Advokattipset" <${smtpData.user}>`,
+    to: userValues.email,
+    subject: template.subject,
+    html,
+  };
+
+  const info = await transporter.sendMail(mailOptions);
+
+  return {
+    email: userValues.email,
+    status: "sent",
+    messageId: info.messageId,
+    sentAt: new Date(),
+  };
+}
+
 // Generate email HTML
 function generatePartnerEmail(
   partner: any,
   userValues: any,
-  activeTemplate: any
+  activeTemplate: any,
+  userUniqueId: number
 ) {
   if (!activeTemplate || !activeTemplate.body) {
     return "<h1>New Lead Received</h1><p>Please check the system for details.</p>";
@@ -815,6 +999,7 @@ function generatePartnerEmail(
   );
 
   const placeholderMappings: Record<string, string> = {
+    "[Id]": String(userUniqueId) || "N/A",
     "[Full name]": userValues.name || "N/A",
     "[Full number]": userValues.phone || "N/A",
     "[Full email]": userValues.email || "N/A",
@@ -840,7 +1025,6 @@ function generatePartnerEmail(
     "{userPreferranceType}":
       userValues.preferranceType || userValues.selectedFormTitle || "N/A",
     "{currentDate}": new Date().toLocaleDateString("no-NO"),
-    "{leadId}": userValues.uniqueId || "N/A",
   };
 
   const foundPlaceholders: string[] = [];
@@ -873,10 +1057,7 @@ function generatePartnerEmail(
     );
   }
   if (remainingCurlyBraces.length > 0) {
-    console.warn(
-      "Unreplaced curly brace placeholders:",
-      remainingCurlyBraces
-    );
+    console.warn("Unreplaced curly brace placeholders:", remainingCurlyBraces);
   }
 
   return emailBody;

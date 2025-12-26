@@ -23,12 +23,12 @@ export const getCachedHomePageData = unstable_cache(
 
           if (loc.locationType === 'County') {
             const county = await County.findById(loc.locationId)
-              .select('name slug excerpt')
+              .select('name slug excerpt icon')
               .lean();
             loc.locationId = county || null;
           } else if (loc.locationType === 'Place') {
             const place = await Place.findById(loc.locationId)
-              .select('name slug excerpt')
+              .select('name slug excerpt icon')
               .lean();
             loc.locationId = place || null;
           }

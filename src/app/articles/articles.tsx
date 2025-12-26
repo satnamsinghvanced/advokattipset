@@ -22,7 +22,7 @@ const Articles = ({
 }) => {
   const articlesPerPage = 6;
 
-  if (!data || data.length <= 0 ) {
+  if (!data || data?.length <= 0 ) {
     notFound()
   }
 
@@ -40,10 +40,10 @@ const Articles = ({
             <div className="flex flex-row flex-wrap gap-2 md:gap-4 lg:flex-col lg:!w-[340px]">
               {tabs?.map((tab: any) => (
                 <Link
-                  key={tab.slug}
-                  href={`?category=${tab.slug}&page=1`}
-                  // href={`/articles/${tab.slug}?page=1`}
-                  className={`border border-dark/50 rounded-lg h-[46px] lg:h-16 px-4 flex items-center text-start justify-start min-w-fit lg:w-full transition-all duration-300 ${selectedCategorySlug === tab.slug
+                  key={tab?.slug}
+                  href={`?category=${tab?.slug}&page=1`}
+                  // href={`/articles/${tab?.slug}?page=1`}
+                  className={`border border-dark/50 rounded-lg h-[46px] lg:h-16 px-4 flex items-center text-start justify-start min-w-fit lg:w-full transition-all duration-300 ${selectedCategorySlug === tab?.slug
                     ? "bg-primary/10 text-dark font-semibold"
                     : "bg-transparent text-dark hover:bg-gray-100"
                     }`}
@@ -63,11 +63,11 @@ const Articles = ({
                 {data?.length > 0 ? (
                   data?.map((article: any) => (
                     <ArticlesCard
-                      key={article._id}
-                      image={article.image}
-                      date={article.showDate}
+                      key={article?._id}
+                      image={article?.image}
+                      date={article?.showDate}
                       title={article?.title}
-                      href={`/articles/${selectedCategorySlug}/${article.slug}`}
+                      href={`/articles/${selectedCategorySlug}/${article?.slug}`}
                     />
                   ))
                 ) : (

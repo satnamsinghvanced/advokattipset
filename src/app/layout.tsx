@@ -1,12 +1,26 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
+import DefaultLayout from "@/components/layout/DefaultLayout";
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
 });
+
+import type { Metadata } from "next";
+
+const siteUrl = (
+  process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000"
+).replace(/\/$/, "");
+
+export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
+  verification: {
+    google: "xyZRY1YzJDbEqdqb44ambRQciD4W_VvfcNMOmtpC0uk",
+  },
+};
 
 export default function RootLayout({
   children,
@@ -15,14 +29,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
-        <meta
-          name="google-site-verification"
-          content="xyZRY1YzJDbEqdqb44ambRQciD4W_VvfcNMOmtpC0uk"
-        />
-      </head>
       <body className={`${inter.variable} antialiased`}>
-        <Providers>{children}</Providers>
+        <Providers>
+          <DefaultLayout>{children}</DefaultLayout>
+        </Providers>
       </body>
     </html>
   );

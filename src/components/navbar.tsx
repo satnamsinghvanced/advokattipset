@@ -13,13 +13,13 @@ const Navbar = ({ logo, logoText }: NavbarProps) => {
     <nav className="bg-navbarbg text-background px-4 lg:px-6 py-6 sticky top-0 !z-[99]">
       <div className="flex justify-between items-center px-2 md:px-6 lg:px-10">
         <div className="text-xl font-bold overflow-hidden">
-          <Link href="/" aria-label="Byggtipset Logo" className="flex gap-1 justify-center items-center">
+          <Link href="/" aria-label="Advokattipset Logo" className="flex gap-1 justify-center items-center">
             {
               logo &&
               <Image
                 src={`${imageBaseUrl}${logo}`}
                 width={40} height={26}
-                alt='Byggtipset Logo'
+                alt='Advokattipset Logo'
                 className='h-full max-md:max-h-[265px] w-[31px]'
                 loading="lazy" />
             }
@@ -27,9 +27,9 @@ const Navbar = ({ logo, logoText }: NavbarProps) => {
               logoText &&
               <Image
                 src={`${imageBaseUrl}${logoText}`}
-                width={77} height={20}
-                alt='Byggtipset Logo'
-                className='h-full max-md:max-h-[265px] w-[85px]'
+                width={100} height={20}
+                alt='Advokattipset Logo'
+                className='h-full max-md:max-h-[265px] w-[142px]'
                 loading="lazy" />
             }
             {
