@@ -7,23 +7,29 @@ import MagnifyIcon from "../icons/mangify";
 import PieChartIcon from "../icons/pieChart";
 
 const ArticleCard = ({ icon, heading, description, href = '/' }: ArticleCardProps) => {
-  const icons: ReactElement[] = [<ChartIcon key={0} />, <MagnifyIcon key={1} />, <PieChartIcon key={1} />];
+  const icons: ReactElement[] = [
+    <ChartIcon key={0} />,
+    <MagnifyIcon key={1} />,
+    <PieChartIcon key={2} />,
+  ];
 
   return (
     <Link href={href} className="bg-background/80 p-6 rounded-xl shadow-sm w-full text-left hover:shadow-md transition">
       <div className="flex items-center gap-3 mb-4">
-        <div className="text-primary text-2xl p-2 ">
-          {icons[icon]}
+        <div className="text-primary text-2xl p-2">
+          {icons[icon % icons.length]}
         </div>
-        <h3 className="text-[20px] md:text-2xl font-bold text-primary">{heading}</h3>
+
+        <h3 className="text-[20px] md:text-2xl font-bold text-primary">
+          {heading}
+        </h3>
       </div>
+
       <div className="flex items-center gap-2">
         <p className="text-secondary">{description}</p>
-        <div>
-          <span className="text-primary text-right text-3xl">
-            <HiOutlineArrowRight />
-          </span>
-        </div>
+        <span className="text-primary text-3xl">
+          <HiOutlineArrowRight />
+        </span>
       </div>
     </Link>
   );
