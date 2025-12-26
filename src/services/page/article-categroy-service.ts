@@ -13,7 +13,6 @@ export const getCachedTopArticleCategory = unstable_cache(
                 console.warn('No articleCategory data found in database');
                 return null;
             }
-
             return articleCategory;
         } catch (error) {
             console.error('articleCategory data fetch error:', error);
