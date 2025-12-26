@@ -13,7 +13,7 @@ export async function generateMetadata() {
   const articlesPage = await getArticlePageData();
   if (!articlesPage) {
     return generatePageMetadata({
-      title: "Articles | Advokattipset.no",
+      title: "Articles | Advokattipset.no.no",
       description: "Read expert articles about real estate in Norway",
       path: "/articles",
     });
@@ -37,11 +37,11 @@ export async function generateMetadata() {
     bannerImage,
   } = articlesPage;
   return generatePageMetadata({
-    title: metaTitle || heading || "Articles | Advokattipset.no",
+    title: metaTitle || heading || "Articles | Advokattipset.no.no",
     description:
       metaDescription ||
       subHeading ||
-      "Welcome to Advokattipset.no — compare and find the best real estate agents in Norway.",
+      "Welcome to Advokattipset.no.no — compare and find the best real estate agents in Norway.",
     path: "/articles",
     keywords: metaKeywords
       ? metaKeywords
@@ -51,17 +51,17 @@ export async function generateMetadata() {
       : ["advokattipset", "real estate", "agents", "compare"],
     type: ogType || "website",
     image: metaImage || ogImage || bannerImage || null,
-    ogTitle: ogTitle || metaTitle || "Home | Advokattipset.no",
+    ogTitle: ogTitle || metaTitle || "Home | Advokattipset.no.no",
     ogDescription:
       ogDescription ||
       metaDescription ||
-      "Compare top real estate agents in Norway easily with Advokattipset.no.",
+      "Compare top real estate agents in Norway easily with Advokattipset.no.no.",
     canonicalUrl: canonicalUrl || "/articles",
     robots: robots || "index, follow",
     jsonLd: jsonLd || {
       "@context": "https://schema.org",
       "@type": "WebSite",
-      name: "Advokattipset.no",
+      name: "Advokattipset.no.no",
     },
     publishedDate: publishedDate,
     lastUpdatedDate: lastUpdatedDate,

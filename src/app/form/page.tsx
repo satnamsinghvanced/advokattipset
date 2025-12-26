@@ -13,7 +13,7 @@ export async function generateMetadata() {
   const formData = await getFormData();
   if (!formData) {
     return generatePageMetadata({
-      title: "Get in touch | Advokattipset.no",
+      title: "Get in touch | Advokattipset.no.no",
       description: "Fill out the form to get in touch with real estate agents",
       path: "/form",
     });
@@ -45,9 +45,9 @@ export async function generateMetadata() {
     path: slug || "/form",
     keywords: metaKeywords
       ? metaKeywords
-          .split(",")
-          ?.map((k: string) => k.trim())
-          .filter(Boolean)
+        .split(",")
+        ?.map((k: string) => k.trim())
+        .filter(Boolean)
       : ["form", "contact", "get in touch"],
     type: ogType || "website",
     image: metaImage || ogImage || image || null,

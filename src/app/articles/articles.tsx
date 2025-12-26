@@ -22,7 +22,7 @@ const Articles = ({
 }) => {
   const articlesPerPage = 6;
 
-  if (!data || data?.length <= 0 ) {
+  if (!data || data?.length <= 0) {
     notFound()
   }
 
@@ -41,7 +41,7 @@ const Articles = ({
               {tabs?.map((tab: any) => (
                 <Link
                   key={tab?.slug}
-                  href={`?category=${tab?.slug}&page=1`}
+                  href={`/articles/${tab?.slug}`}
                   // href={`/articles/${tab?.slug}?page=1`}
                   className={`border border-dark/50 rounded-lg h-[46px] lg:h-16 px-4 flex items-center text-start justify-start min-w-fit lg:w-full transition-all duration-300 ${selectedCategorySlug === tab?.slug
                     ? "bg-primary/10 text-dark font-semibold"

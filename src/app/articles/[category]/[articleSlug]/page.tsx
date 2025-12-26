@@ -3,6 +3,7 @@ import { getCachedArticleBySlug } from "@/services/page/getCachedArticleBySlug-s
 import { capitalizeTitle } from "@/utils/capitalizeTitle";
 import { generatePageMetadata } from "@/utils/metadata";
 import ArticleSlug from "./articleSlug";
+import { notFound } from "next/navigation";
 
 export async function generateMetadata({ params }: SlugPageProps) {
   const param = await params;
@@ -12,8 +13,8 @@ export async function generateMetadata({ params }: SlugPageProps) {
   const articleDoc = await getCachedArticleBySlug(slug ?? "");
   if (!articleDoc) {
     return generatePageMetadata({
-      title: `${title} | Advokattipset.no`,
-      description: `Read expert articles about ${title} on Advokattipset.no.`,
+      title: `${title} | Advokattipset.no.no`,
+      description: `Read expert articles about ${title} on Advokattipset.no.no.`,
       path: `/articles/${articleCategory}/${slug}`,
     });
   }
@@ -34,23 +35,23 @@ export async function generateMetadata({ params }: SlugPageProps) {
   } = article ?? {};
 
   return generatePageMetadata({
-    title: metaTitle || `${title} | Advokattipset.no`,
+    title: metaTitle || `${title} | Advokattipset.no.no`,
     description:
-      metaDescription || `Read expert articles about ${title} on Advokattipset.no.`,
+      metaDescription || `Read expert articles about ${title} on Advokattipset.no.no.`,
     path: `/articles/${articleCategory}/${slug}`,
     keywords: metaKeywords
       ? metaKeywords
-          ?.split(",")
-          ?.map((k: string) => k.trim())
-          ?.filter(Boolean)
+        ?.split(",")
+        ?.map((k: string) => k.trim())
+        ?.filter(Boolean)
       : ["advokattipset", "real estate", "articles"],
     type: ogType || "website",
     image: ogImage || null,
-    ogTitle: ogTitle || metaTitle || `${title} | Advokattipset.no`,
+    ogTitle: ogTitle || metaTitle || `${title} | Advokattipset.no.no`,
     ogDescription:
       ogDescription ||
       metaDescription ||
-      `Explore helpful ${title} articles from Advokattipset.no.`,
+      `Explore helpful ${title} articles from Advokattipset.no.no.`,
     canonicalUrl: canonicalUrl
       ? canonicalUrl.startsWith("/") || canonicalUrl.startsWith("http")
         ? canonicalUrl
@@ -70,6 +71,9 @@ export async function generateMetadata({ params }: SlugPageProps) {
 const ArticleSlugPage = async ({ params }: SlugPageProps) => {
   const param = await params;
   const title = await param?.articleSlug;
+  if (!title) {
+    notFound()
+  }
   return (
     <div className="max-w-7xl m-auto py-10 px-4 md:px-6 lg:px-8">
       <ArticleSlug slugValue={title} />

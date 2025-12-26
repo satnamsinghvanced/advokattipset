@@ -9,7 +9,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const doc: any = await getCachedHomePageData();
   if (!doc) {
     return generatePageMetadata({
-      title: "Home | Advokattipset.no",
+      title: "Home | Advokattipset.no.no",
       description: "Compare and find the best real estate agents in Norway",
       path: "/",
     });
@@ -35,31 +35,31 @@ export async function generateMetadata(): Promise<Metadata> {
   } = homeData.seo || {};
 
   return generatePageMetadata({
-    title: metaTitle || heading || "Home | Advokattipset.no",
+    title: metaTitle || heading || "Home | Advokattipset.no.no",
     description:
       metaDescription ||
       subHeading ||
-      "Welcome to Advokattipset.no — compare and find the best real estate agents in Norway.",
+      "Welcome to Advokattipset.no.no — compare and find the best real estate agents in Norway.",
     path: "/",
     keywords: metaKeywords
       ? metaKeywords
-          .split(",")
-          ?.map((k: string) => k.trim())
-          .filter(Boolean)
+        .split(",")
+        ?.map((k: string) => k.trim())
+        .filter(Boolean)
       : ["advokattipset", "real estate", "agents", "compare"],
     type: ogType || "website",
     image: metaImage || ogImage || bannerImage || null,
-    ogTitle: ogTitle || metaTitle || "Home | Advokattipset.no",
+    ogTitle: ogTitle || metaTitle || "Home | Advokattipset.no.no",
     ogDescription:
       ogDescription ||
       metaDescription ||
-      "Compare top real estate agents in Norway easily with Advokattipset.no.",
+      "Compare top real estate agents in Norway easily with Advokattipset.no.no.",
     canonicalUrl: canonicalUrl,
     robots: robots || "index, follow",
     jsonLd: jsonLd || {
       "@context": "https://schema.org",
       "@type": "WebSite",
-      name: "Advokattipset.no",
+      name: "Advokattipset.no.no",
       url: API_URL,
     },
     publishedDate: publishedDate,

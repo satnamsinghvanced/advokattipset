@@ -24,7 +24,7 @@ const Banner = async ({ BannerData }: any) => {
       <div className="relative z-8 flex flex-col justify-center items-center h-full text-center text-background px-4">
         <div className="bg-[#111E3399] py-[24px] px-[32px] rounded-[16px] flex flex-col justify-center items-center">
           <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold max-w-xl leading-tight mb-4 !text-background">
-            {BannerData?.title || 'Gjør det enkelt å finne riktig megler!'}
+            {BannerData?.title || 'Gjør det enkelt å finne riktig advokattipset!'}
           </h1>
           <p className=" text-sm sm:text-base mb-8 max-w-[400px]">
             {BannerData?.subtitle || 'Sammenlign de beste eiendomsmeglerne nær deg, helt gratis og uforpliktende. default'}

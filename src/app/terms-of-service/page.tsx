@@ -13,8 +13,8 @@ export async function generateMetadata() {
   const termsData = await getPageData();
   if (!termsData) {
     return generatePageMetadata({
-      title: "Terms of Service | Advokattipset.no",
-      description: "Advokattipset.no terms of service page",
+      title: "Terms of Service | Advokattipset.no.no",
+      description: "Advokattipset.no.no terms of service page",
       path: "/terms-of-service",
     });
   }
@@ -33,8 +33,8 @@ export async function generateMetadata() {
     title,
   } = termsData;
   return generatePageMetadata({
-    title: metaTitle || title || "Terms of Service | Advokattipset.no",
-    description: metaDescription || "Advokattipset.no terms of service page",
+    title: metaTitle || title || "Terms of Service | Advokattipset.no.no",
+    description: metaDescription || "Advokattipset.no.no terms of service page",
     path: "/terms-of-service",
     keywords: metaKeywords
       ? metaKeywords
@@ -50,11 +50,11 @@ export async function generateMetadata() {
         ],
     type: "website",
     image: metaImage || null,
-    ogTitle: ogTitle || metaTitle || title || "Terms of Service | Advokattipset.no",
+    ogTitle: ogTitle || metaTitle || title || "Terms of Service | Advokattipset.no.no",
     ogDescription:
       ogDescription ||
       metaDescription ||
-      "Learn the terms of service for Advokattipset.no",
+      "Learn the terms of service for Advokattipset.no.no",
     canonicalUrl: canonicalUrl || "/terms-of-service",
     robots: robots || "index, follow",
     jsonLd: jsonLd || {},

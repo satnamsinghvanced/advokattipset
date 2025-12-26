@@ -15,8 +15,8 @@ export async function generateMetadata() {
   const privacyPolicyData = await getPageData();
   if (!privacyPolicyData) {
     return generatePageMetadata({
-      title: "Privacy Policy | Advokattipset.no",
-      description: "Advokattipset.no privacy policy page",
+      title: "Privacy Policy | Advokattipset.no.no",
+      description: "Advokattipset.no.no privacy policy page",
       path: "/privacy-policy",
     });
   }
@@ -36,28 +36,28 @@ export async function generateMetadata() {
   } = privacyPolicyData;
 
   return generatePageMetadata({
-    title: metaTitle || title || "Privacy Policy | Advokattipset.no",
-    description: metaDescription || "Advokattipset.no privacy policy page",
+    title: metaTitle || title || "Privacy Policy | Advokattipset.no.no",
+    description: metaDescription || "Advokattipset.no.no privacy policy page",
     path: "/privacy-policy",
     keywords: metaKeywords
       ? metaKeywords
-          .split(",")
-          ?.map((k: string) => k.trim())
-          .filter(Boolean)
+        .split(",")
+        ?.map((k: string) => k.trim())
+        .filter(Boolean)
       : [
-          "privacy policy",
-          "advokattipset",
-          "terms and conditions",
-          "data privacy",
-          "user data",
-        ],
+        "privacy policy",
+        "advokattipset",
+        "terms and conditions",
+        "data privacy",
+        "user data",
+      ],
     type: "website",
     image: metaImage || null,
-    ogTitle: ogTitle || metaTitle || title || "Privacy Policy | Advokattipset.no",
+    ogTitle: ogTitle || metaTitle || title || "Privacy Policy | Advokattipset.no.no",
     ogDescription:
       ogDescription ||
       metaDescription ||
-      "Learn how Advokattipset.no protects your privacy and handles your personal information.",
+      "Learn how Advokattipset.no.no protects your privacy and handles your personal information.",
     canonicalUrl: canonicalUrl || "/privacy-policy",
     robots: robots || "index, follow",
     jsonLd: jsonLd || {},

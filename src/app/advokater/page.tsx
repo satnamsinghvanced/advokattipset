@@ -15,9 +15,9 @@ export async function generateMetadata(): Promise<Metadata> {
   const realestateAgents = await getRealestateAgentsData();
   if (!realestateAgents) {
     return generatePageMetadata({
-      title: "Real Estate Agents | Advokattipset.no",
+      title: "Real Estate Agents | Advokattipset.no.no",
       description: "Compare and find the best real estate agents in Norway",
-      path: "/eiendomsmegler",
+      path: "/advokater",
     });
   }
   const {
@@ -39,12 +39,12 @@ export async function generateMetadata(): Promise<Metadata> {
     bannerImage,
   } = realestateAgents;
   return generatePageMetadata({
-    title: metaTitle || heading || "Real Estate Agents | Advokattipset.no",
+    title: metaTitle || heading || "Real Estate Agents | Advokattipset.no.no",
     description:
       metaDescription ||
       subHeading ||
-      "Welcome to Advokattipset.no — compare and find the best real estate agents in Norway.",
-    path: "/eiendomsmegler",
+      "Welcome to Advokattipset.no.no — compare and find the best real estate agents in Norway.",
+    path: "/advokater",
     keywords: metaKeywords
       ? metaKeywords
           .split(",")
@@ -53,17 +53,17 @@ export async function generateMetadata(): Promise<Metadata> {
       : ["advokattipset", "real estate", "agents", "compare"],
     type: ogType || "website",
     image: metaImage || ogImage || bannerImage || null,
-    ogTitle: ogTitle || metaTitle || "Real Estate Agents | Advokattipset.no",
+    ogTitle: ogTitle || metaTitle || "Real Estate Agents | Advokattipset.no.no",
     ogDescription:
       ogDescription ||
       metaDescription ||
-      "Compare top real estate agents in Norway easily with Advokattipset.no.",
-    canonicalUrl: canonicalUrl || "/eiendomsmegler",
+      "Compare top real estate agents in Norway easily with Advokattipset.no.no.",
+    canonicalUrl: canonicalUrl || "/advokater",
     robots: robots || "index, follow",
     jsonLd: jsonLd || {
       "@context": "https://schema.org",
       "@type": "WebSite",
-      name: "Advokattipset.no",
+      name: "Advokattipset.no.no",
     },
     publishedDate: publishedDate,
     lastUpdatedDate: lastUpdatedDate,

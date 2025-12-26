@@ -42,7 +42,7 @@ const Footer = async ({ logoText }: FooterProps) => {
                   <Image
                     src={`${imageBaseUrl}${logoText}`}
                     width={120} height={32}
-                    alt='Advokattipset Logo'
+                    alt='Meglertip Logo'
                     className='h-full max-md:max-h-[265px] w-full rounded-2xl'
                     loading="lazy" />
 
@@ -50,14 +50,14 @@ const Footer = async ({ logoText }: FooterProps) => {
                   <LogoText />
               }
             </div>
-            <div className="text-background flex gap-2 items-end max-md:hidden" aria-label="Social Media | Advokattipset.no">
+            <div className="text-background flex gap-2 items-end max-md:hidden" aria-label="Social Media | Advokattipset.no.no">
               {socialLinks && socialLinks?.map((link: any, index: number) => (
                 <Link
                   key={index}
                   href={link.href}
                   target={link.newPage ? "_blank" : "_self"}
                   className="bg-background p-2 rounded-lg group"
-                  aria-label={`${link.icon} page Advokattipset.no`}
+                  aria-label={`${link.icon} page Advokattipset.no.no`}
                 >
                   {link.icon === 'facebook' && <FaFacebook className={socialMediaClasses} />}
                   {link.icon === 'instagram' && <FaInstagram className={socialMediaClasses} />}

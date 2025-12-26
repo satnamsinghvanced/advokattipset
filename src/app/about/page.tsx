@@ -15,8 +15,8 @@ export async function generateMetadata() {
   const aboutData = await getAboutData();
   if (!aboutData) {
     return generatePageMetadata({
-      title: "About | Advokattipset.no",
-      description: "Learn more about Advokattipset.no",
+      title: "About | Advokattipset.no.no",
+      description: "Learn more about Advokattipset.no.no",
       path: "/about",
     });
   }
@@ -40,9 +40,9 @@ export async function generateMetadata() {
     image,
   } = aboutData;
   return generatePageMetadata({
-    title: metaTitle || heading || "About Advokattipset.no",
+    title: metaTitle || heading || "About Advokattipset.no.no",
     description:
-      metaDescription || subHeading || "Learn more about Advokattipset.no",
+      metaDescription || subHeading || "Learn more about Advokattipset.no.no",
     path: slug || "/about",
     keywords: metaKeywords
       ? metaKeywords
@@ -52,12 +52,12 @@ export async function generateMetadata() {
       : ["about", "advokattipset", "real estate"],
     type: ogType || "website",
     image: metaImage || ogImage || image || null,
-    ogTitle: ogTitle || metaTitle || heading || "About Advokattipset.no",
+    ogTitle: ogTitle || metaTitle || heading || "About Advokattipset.no.no",
     ogDescription:
       ogDescription ||
       metaDescription ||
       subHeading ||
-      "Learn more about Advokattipset.no",
+      "Learn more about Advokattipset.no.no",
     canonicalUrl: canonicalUrl || "/about",
     robots: robots || "index, follow",
     jsonLd: jsonLd || {},

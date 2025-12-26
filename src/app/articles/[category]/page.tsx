@@ -31,8 +31,8 @@ export async function generateMetadata({
 
   if (!articlesData?.data) {
     return generatePageMetadata({
-      title: `${category} Articles | Advokattipset.no`,
-      description: `Read expert articles about ${category} on Advokattipset.no.`,
+      title: `${category} Articles | Advokattipset.no.no`,
+      description: `Read expert articles about ${category} on Advokattipset.no.no.`,
       path: `/articles/${category}`,
     });
   }
@@ -61,10 +61,10 @@ export async function generateMetadata({
     : pathname;
 
   return generatePageMetadata({
-    title: metaTitle || `${category} Articles | Advokattipset.no`,
+    title: metaTitle || `${category} Articles | Advokattipset.no.no`,
     description:
       metaDescription ||
-      `Read expert articles about ${category} on Advokattipset.no.`,
+      `Read expert articles about ${category} on Advokattipset.no.no.`,
     path: pathname,
     keywords: metaKeywords
       ? metaKeywords
@@ -74,11 +74,11 @@ export async function generateMetadata({
       : ["advokattipset", category, "real estate", "articles"],
     type: ogType || "website",
     image: ogImage || null,
-    ogTitle: ogTitle || metaTitle || `${category} Articles | Advokattipset.no`,
+    ogTitle: ogTitle || metaTitle || `${category} Articles | Advokattipset.no.no`,
     ogDescription:
       ogDescription ||
       metaDescription ||
-      `Explore helpful ${category} articles from Advokattipset.no.`,
+      `Explore helpful ${category} articles from Advokattipset.no.no.`,
     canonicalUrl: finalCanonical,
     robots: robots || "index, follow",
     jsonLd: jsonLd || {

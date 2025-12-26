@@ -14,7 +14,7 @@ export async function generateMetadata() {
   const faqPage = await getFaqPageData();
   if (!faqPage) {
     return generatePageMetadata({
-      title: "FAQ | Advokattipset.no",
+      title: "FAQ | Advokattipset.no.no",
       description:
         "Frequently asked questions about real estate agents in Norway",
       path: "/faq",
@@ -40,31 +40,31 @@ export async function generateMetadata() {
   } = faqPage;
 
   return generatePageMetadata({
-    title: metaTitle || heading || "FAQ | Advokattipset.no",
+    title: metaTitle || heading || "FAQ | Advokattipset.no.no",
     description:
       metaDescription ||
       subHeading ||
-      "Welcome to Advokattipset.no — compare and find the best real estate agents in Norway.",
+      "Welcome to Advokattipset.no.no — compare and find the best real estate agents in Norway.",
     path: "/faq",
     keywords: metaKeywords
       ? metaKeywords
-          .split(",")
-          ?.map((k: string) => k.trim())
-          .filter(Boolean)
+        .split(",")
+        ?.map((k: string) => k.trim())
+        .filter(Boolean)
       : ["advokattipset", "real estate", "agents", "compare"],
     type: ogType || "website",
     image: metaImage || ogImage || bannerImage || null,
-    ogTitle: ogTitle || metaTitle || "Home | Advokattipset.no",
+    ogTitle: ogTitle || metaTitle || "Home | Advokattipset.no.no",
     ogDescription:
       ogDescription ||
       metaDescription ||
-      "Compare top real estate agents in Norway easily with Advokattipset.no.",
+      "Compare top real estate agents in Norway easily with Advokattipset.no.no.",
     canonicalUrl: canonicalUrl || "/faq",
     robots: robots || "index, follow",
     jsonLd: jsonLd || {
       "@context": "https://schema.org",
       "@type": "WebSite",
-      name: "Advokattipset.no",
+      name: "Advokattipset.no.no",
     },
     publishedDate: publishedDate,
     lastUpdatedDate: lastUpdatedDate,

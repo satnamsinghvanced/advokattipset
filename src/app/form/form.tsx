@@ -1234,10 +1234,10 @@ const Form = ({
             </div>
           )}
 
-          <h2 className="lg:text-5xl text-[32px] mb-0 lg:mb-6 font-semibold text-primary mt-6">
+          <h1 className="lg:text-5xl text-[32px] mb-0 lg:mb-6 font-semibold text-primary mt-6">
             {/* {getLeftSideTitle()} */}
             {pageTitle}
-          </h2>
+          </h1>
           <p className="text-secondary text-sm">{pageDescription}</p>
 
           {/* {getLeftSideDescription() && (
