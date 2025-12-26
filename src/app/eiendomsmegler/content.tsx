@@ -49,12 +49,16 @@ const EiendomsmeglerContent = async ({ searchParams, cp, county, realestateAgent
               </div>
             </div>
             <div className="relative">
-              <div className="max-w-7xl m-auto py-10  flex gap-8">
+              <div className="w-0 h-0  absolute -top-12" id="region-selector" ></div>
+              <div className="max-w-7xl m-auto py-10  flex gap-8" id="region-selector">
                 <div className="w-full z-1" >
                   <RegionSelectorContener county={county} />
                 </div>
               </div>
+
+
             </div>
+
             <div className="max-w-7xl m-auto py-10 w-full flex gap-8">
               <div className=" w-full">
                 <FAQSection {...faqSectionProps} className="w-full" />

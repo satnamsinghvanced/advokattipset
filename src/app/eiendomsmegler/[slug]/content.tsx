@@ -42,6 +42,8 @@ const SlugContent = async ({
   const companies = Array.isArray(placeData.data.companies)
     ? placeData.data.companies
     : [];
+  const countyValue = placeData?.data?.countyId?.slug || slug
+
   return (
     <>
       <div className="w-full flex gap-8 flex-row max-md:flex-col">
@@ -63,7 +65,7 @@ const SlugContent = async ({
           ></Heading>
           <div
             dangerouslySetInnerHTML={{
-              __html: formatData(placeData.data?.description) || "",
+              __html: formatData(placeData?.data?.description) || "",
             }}
             className="eiendomsmegler-content"
           ></div>
@@ -74,7 +76,7 @@ const SlugContent = async ({
               com_data={companies}
             />
           </div>
-          <RegionSelectorContener county={county} />
+          <RegionSelectorContener county={countyValue} />
           <FAQSection {...faqSectionProps} className="w-full" />
         </div>
         <div className="w-1/2 max-md:w-full max-w-[346px] h-fit sticky top-24 max-md:top-0 max-md:relative">

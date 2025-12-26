@@ -193,6 +193,7 @@ const partnerSchema = new mongoose.Schema(
       lastMonth: { type: Number, default: 0 },
       currentMonth: { type: Number, default: 0 },
       total: { type: Number, default: 0 },
+      lastReset: { type: Date, default: new Date() },
     },
     leadType: {
       type: String,
@@ -600,6 +601,9 @@ const CollaboratePartners = new mongoose.Schema(
     isActive: { type: Boolean, default: true },
     leads: {
       total: { type: Number, default: 0 },
+      lastMonth: { type: Number, default: 0 },
+      currentMonth: { type: Number, default: 0 },
+      lastReset: { type: Date, default: new Date() },
     },
     leadTypes: [
       {
@@ -748,8 +752,14 @@ const userSchema = new Schema(
     // ],
     partnerIds: [
       {
-        type: Schema.Types.ObjectId,
-        ref: "CollaboratePartners",
+        partnerId: {
+          type: Schema.Types.ObjectId,
+          ref: "CollaboratePartners",
+        },
+        leadPrice: {
+          type: Number,
+          default: 0,
+        },
       },
     ],
 
@@ -766,6 +776,21 @@ const userSchema = new Schema(
       type: String,
       required: false,
     },
+    emailResults: [
+      {
+        partnerId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "CollaboratePartners",
+        },
+        email: String,
+        status: {
+          type: String,
+          enum: ["sent", "failed", "pending"],
+        },
+        sentAt: Date,
+        error: String,
+      },
+    ],
   },
   { timestamps: true }
 );

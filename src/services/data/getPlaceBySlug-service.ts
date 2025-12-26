@@ -8,6 +8,10 @@ async function fetchCityBySlug(slug: string) {
   let data =
     await Places.findOne({ slug })
       .populate("companies.companyId")
+      .populate({
+        path: "countyId",
+        select: "slug"
+      })
       .lean();
 
   if (!data) {

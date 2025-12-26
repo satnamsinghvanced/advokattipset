@@ -202,6 +202,13 @@ export interface ContactFormBody {
   company?: string;
   ip?: string;
 }
+export interface IEmailResult {
+  partnerId: mongoose.Types.ObjectId;
+  email: string;
+  status: "sent" | "failed" | "pending";
+  sentAt?: Date;
+  error?: string;
+}
 
 export interface IUser extends Document {
   status: "Pending" | "Complete" | "Archive";
@@ -209,8 +216,10 @@ export interface IUser extends Document {
   ip: string;
   partnerIds: mongoose.Types.ObjectId[];
   dynamicFields: Map<string, any>;
+  emailResults?: IEmailResult[];
   createdAt: Date;
   updatedAt: Date;
+  uniqueId: number;
 }
 
 export interface CompanyPaginationProps {
@@ -237,10 +246,10 @@ export interface ArticleCategoryPageProps extends SlugPageProps {
 export interface HowItWorksProps {
   cards: any;
   flex?: boolean;
-  title?: string
-  data?: any
-  titleClass?: string
-  howItWorks?: boolean
+  title?: string;
+  data?: any;
+  titleClass?: string;
+  howItWorks?: boolean;
 }
 
 export interface LogoProps {
@@ -257,11 +266,11 @@ export interface FooterProps extends LogoProps {
 }
 
 export interface ArticlesCardProps {
-  image: string
-  date: string
-  title: string
-  href?: string
-  readMoreText?: string
+  image: string;
+  date: string;
+  title: string;
+  href?: string;
+  readMoreText?: string;
 }
 
 export interface BreadcrumbsProps {
@@ -278,11 +287,11 @@ export type HeadingProps = {
 };
 
 export interface RedirectButtonProps {
-  text?: any,
-  redirect?: string,
-  className?: string
-  isIconOnly?: boolean,
-  disableAnimation?: boolean
+  text?: any;
+  redirect?: string;
+  className?: string;
+  isIconOnly?: boolean;
+  disableAnimation?: boolean;
 }
 
 export interface County {

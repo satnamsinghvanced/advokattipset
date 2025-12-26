@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import FeatureChip from "../chips/featureChip";
 import Star from "../star";
+import { formatData } from "@/utils/formatData";
 
 interface AgentCardProps {
   companyName?: string;
@@ -74,7 +75,7 @@ const AgentCard = ({
         <div className="mt-2">
           <div
             dangerouslySetInnerHTML={{
-              __html: description || "",
+              __html: formatData(description || ""),
             }}
             className="text-secondary line-clamp-2"
           ></div>

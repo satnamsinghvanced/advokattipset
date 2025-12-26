@@ -130,7 +130,7 @@ const SubmissionResult = ({
     </div>
     <h3 className="text-[32px] font-semibold leading-10">
       {companyFound
-        ? `Vi har sendt nå oppdraget til (${partnerNames})`
+        ? `Vi har sendt din henvendelse til (${partnerNames})`
         : "OBS: Vi klarte dessverre ikke å finne noen relevante aktører for deg denne gangen. Du er velkommen til å prøve igjen ved senere anledning."}
     </h3>
     {companyFound && (
@@ -286,6 +286,10 @@ const Form = ({
     };
   }, []);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [currentStep, currentFormIndex]);
+
   const loadFormData = async (index: number, formId: string) => {
     // Update loading state for this form
     setSelectedForms((prev) =>
@@ -407,7 +411,11 @@ const Form = ({
   const validateField = useCallback(
     (name: string, value: any, field: FormField, formIndex: number): string => {
       if (field.required) {
-        if (
+        if (field.name === "phone" && value?.replace(/^\+47/, "")?.length !== 8) {
+          return `${field.label} should be 8 digits`;
+        } else if (field.name === "postalCode" && value?.length !== 4) {
+          return `${field.label} should be 4 digits`;
+        } else if (
           field.type === "checkbox" &&
           Array.isArray(field.options) &&
           field.options.length > 0
@@ -446,10 +454,10 @@ const Form = ({
           case "tel":
           case "phone":
             const digitsOnly = sanitizedValue.replace(/[\s-]/g, "");
-            const norwegianPhoneRegex = /^\+47\d{8}$/;
+            const norwegianPhoneRegex = /^\d{8}$/;
 
             if (!norwegianPhoneRegex.test(digitsOnly)) {
-              return "Phone number must start with +47 and be followed by 8 digits (e.g., +4712345678)";
+              return "Phone number must be 8 digits (e.g., 12345678)";
             }
             break;
           case "file":
@@ -785,9 +793,9 @@ const Form = ({
         !!currentFormData?.errors.postalCode;
 
       return (
-        <label key={key} className="font-medium text-small !mb-[50px]">
+        <label key={key} className="font-medium text-small !mt-[-20px]">
           {field.label} {field.required ? " *" : ""}
-          <div className="flex gap-3">
+          <div className="flex gap-3 h-16">
             <Input
               type="text"
               placeholder="Adresseplassen 13"
@@ -937,11 +945,11 @@ const Form = ({
               if (onlyDigits.length > inputLengthLimit) {
                 onlyDigits = onlyDigits.substring(0, inputLengthLimit);
               }
-              const finalStoredValue = countryCode + onlyDigits;
+              const finalStoredValue = onlyDigits;
               handleChange(formIndex, field.name, finalStoredValue, field);
             }}
             onBlur={() => {
-              handleBlur(formIndex, field.name, countryCode + rawValue, field);
+              handleBlur(formIndex, field.name, rawValue, field);
             }}
           />
         );
@@ -1003,6 +1011,11 @@ const Form = ({
               errorMessage={fieldProps.errorMessage}
               isInvalid={fieldProps.isInvalid}
               onBlur={fieldProps.onBlur}
+              popoverProps={{
+                placement: "bottom",
+                shouldFlip: false,
+
+              }}
               onSelectionChange={(keys) => {
                 const selectedValue = Array.from(keys).join(",");
                 handleChange(formIndex, field.name, selectedValue, field);
@@ -1010,7 +1023,9 @@ const Form = ({
               }}
             >
               {availableOptions?.map((opt: string, optIndex: number) => (
-                <SelectItem key={opt || `opt-${optIndex}`} textValue={`${opt} ${optIndex}`}>
+                <SelectItem key={opt || `opt-${optIndex}`} textValue={opt} >
+                  {/* // <SelectItem key={opt || `opt-${optIndex}`} textValue={`${opt} ${optIndex}`}> */}
+
                   {opt}
                 </SelectItem>
               ))}

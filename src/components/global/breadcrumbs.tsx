@@ -25,7 +25,7 @@ const Breadcrumbs = ({ className = "" }: BreadcrumbsProps) => {
                         </Link>
                     </BreadcrumbItem>
                 )}
-
+                {/* if include  '%C3%B8' replace with 'ø' */}
                 {pathSegments?.map((segment, index) => {
                     const formattedSegment =
                         segment.charAt(0) + segment.slice(1);
@@ -43,7 +43,7 @@ const Breadcrumbs = ({ className = "" }: BreadcrumbsProps) => {
                                 :
                                 (
                                     <span className={` text-dark`}>
-                                        {capitalizeTitle(formattedSegment)}
+                                        {capitalizeTitle(formattedSegment)?.replace('%C3%B8', 'ø')}
                                     </span>
                                 )
                             }

@@ -65,9 +65,9 @@ const ArticleSlug = async ({ slugValue }: ArticleProps) => {
           <GetQuotes />
         </div>
       </div>
-      {
-        article.articleTags ?
-          <ArticlesByTags tags={article.articleTags} slug={article.slug} />
+      {article?.articleTags &&
+        article?.articleTags ?
+          <ArticlesByTags tags={article?.articleTags} slug={article?.slug} />
           :
           <ArticleSecond />
       }

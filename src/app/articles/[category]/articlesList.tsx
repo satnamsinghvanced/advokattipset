@@ -11,7 +11,7 @@ const ArticlesList = async ({
 }: ArticlesListProps) => {
 
   const articles = initialData?.data || [];
-  if (!articles || articles.length < 1) {
+  if (!articles || articles?.length < 1) {
     notFound()
   }
   const totalPages = initialData?.totalPages || 1;
@@ -24,14 +24,14 @@ const ArticlesList = async ({
         role="list"
         aria-label={`Articles about ${category}`}
       >
-        {articles.length > 0 ? (
+        {articles?.length > 0 ? (
           articles?.map((article: any) => (
             <ArticlesCard
-              key={article._id}
-              image={article.image}
-              date={article.showDate || article.date}
+              key={article?._id}
+              image={article?.image}
+              date={article?.showDate || article?.date}
               title={article?.title}
-              href={`/articles/${category}/${article.slug}`}
+              href={`/articles/${category}/${article?.slug}`}
             />
           ))
         ) : (
