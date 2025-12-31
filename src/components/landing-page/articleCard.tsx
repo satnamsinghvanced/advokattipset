@@ -28,9 +28,9 @@ const ArticleCard = ({ icon, heading, description, href = '/' }: ArticleCardProp
       <div className="flex items-center gap-2">
         <p className="text-secondary">{description}</p>
         <span className="text-primary text-3xl">
-          <HiOutlineArrowRight />
-        </span>
-      </div>
+            <HiOutlineArrowRight />
+          </span>
+        </div>
     </Link>
   );
 };

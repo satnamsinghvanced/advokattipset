@@ -6,6 +6,7 @@ import GetQuotes from "@/components/quotes/getQuotes";
 import { FAQSectionProps, SlugContentProps } from "@/const/types";
 import { getCachedCityBySlugData } from "@/services/data/getPlaceBySlug-service";
 import { getCachedLatestFAQs } from "@/services/page/faq-service";
+import { cleanHtmlContent } from "@/utils/cleanHtml";
 import { formatData } from "@/utils/formatData";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -42,7 +43,7 @@ const SlugContent = async ({
   const companies = Array.isArray(placeData.data.companies)
     ? placeData.data.companies
     : [];
-  const countyValue = placeData?.data?.countyId?.slug || slug
+  const countyValue = placeData?.data?.countyId?.slug || slug;
 
   return (
     <>
@@ -60,14 +61,18 @@ const SlugContent = async ({
           )}
           <Heading
             className="!text-[64px] max-lg:!text-[36px] font-bold text-primary leading-10 lg:leading-18 pr-3"
-            heading={`${placeData?.data?.title || placeData?.data?.companyName || ""
-              }`}
+            heading={`${
+              placeData?.data?.title || placeData?.data?.companyName || ""
+            }`}
           ></Heading>
           <div
             dangerouslySetInnerHTML={{
-              __html: formatData(placeData?.data?.description) || "",
+              __html:
+                formatData(
+                  cleanHtmlContent(placeData?.data?.description || "")
+                ) || "",
             }}
-            className="advokater-content"
+            className="artikler-content"
           ></div>
           <div className="mb-8">
             <CompanyContent

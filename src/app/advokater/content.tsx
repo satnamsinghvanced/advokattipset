@@ -4,9 +4,15 @@ import FAQSection from "@/components/landing-page/FaqSection";
 import GetQuotes from "@/components/quotes/getQuotes";
 import { FAQSectionProps } from "@/const/types";
 import { getCachedLatestFAQs } from "@/services/page/faq-service";
+import { cleanHtmlContent } from "@/utils/cleanHtml";
 import CompanyContent from "../../components/company/companyContent";
 
-const EiendomsmeglerContent = async ({ searchParams, cp, county, realestateAgents }: any) => {
+const ArtiklerContent = async ({
+  searchParams,
+  cp,
+  county,
+  realestateAgents,
+}: any) => {
   const latestFAQsDoc = await getCachedLatestFAQs();
   const latestFAQs = await JSON.parse(JSON.stringify(latestFAQsDoc));
 
@@ -35,28 +41,36 @@ const EiendomsmeglerContent = async ({ searchParams, cp, county, realestateAgent
                 ></Heading>
                 <div
                   dangerouslySetInnerHTML={{
-                    __html: realestateAgents?.description || "",
+                    __html: cleanHtmlContent(
+                      realestateAgents?.description || ""
+                    ),
                   }}
                   className="real-estate-content"
                 ></div>
                 <CompanyContent searchParams={searchParams} cp={cp} />
                 <div
                   dangerouslySetInnerHTML={{
-                    __html: realestateAgents?.descriptionBottom || "",
+                    __html: cleanHtmlContent(
+                      realestateAgents?.descriptionBottom || ""
+                    ),
                   }}
                   className="real-estate-content"
                 ></div>
               </div>
             </div>
             <div className="relative">
-              <div className="w-0 h-0  absolute -top-12" id="region-selector" ></div>
-              <div className="max-w-7xl m-auto py-10  flex gap-8" id="region-selector">
-                <div className="w-full z-1" >
+              <div
+                className="w-0 h-0  absolute -top-12"
+                id="region-selector"
+              ></div>
+              <div
+                className="max-w-7xl m-auto py-10  flex gap-8"
+                id="region-selector"
+              >
+                <div className="w-full z-1">
                   <RegionSelectorContener county={county} />
                 </div>
               </div>
-
-
             </div>
 
             <div className="max-w-7xl m-auto py-10 w-full flex gap-8">
@@ -74,4 +88,4 @@ const EiendomsmeglerContent = async ({ searchParams, cp, county, realestateAgent
   );
 };
 
-export default EiendomsmeglerContent;
+export default ArtiklerContent;

@@ -14,10 +14,10 @@ export async function generateMetadata() {
   const faqPage = await getFaqPageData();
   if (!faqPage) {
     return generatePageMetadata({
-      title: "FAQ | Advokattipset.no.no",
+      title: "FAQ | Advokattipset.no",
       description:
         "Frequently asked questions about real estate agents in Norway",
-      path: "/faq",
+      path: "/ofte-stilte-sporsmal",
     });
   }
   const {
@@ -40,12 +40,12 @@ export async function generateMetadata() {
   } = faqPage;
 
   return generatePageMetadata({
-    title: metaTitle || heading || "FAQ | Advokattipset.no.no",
+    title: metaTitle || heading || "FAQ | Advokattipset.no",
     description:
       metaDescription ||
       subHeading ||
-      "Welcome to Advokattipset.no.no — compare and find the best real estate agents in Norway.",
-    path: "/faq",
+      "Welcome to Advokattipset.no — compare and find the best real estate agents in Norway.",
+    path: "/ofte-stilte-sporsmal",
     keywords: metaKeywords
       ? metaKeywords
         .split(",")
@@ -54,17 +54,17 @@ export async function generateMetadata() {
       : ["advokattipset", "real estate", "agents", "compare"],
     type: ogType || "website",
     image: metaImage || ogImage || bannerImage || null,
-    ogTitle: ogTitle || metaTitle || "Home | Advokattipset.no.no",
+    ogTitle: ogTitle || metaTitle || "Home | Advokattipset.no",
     ogDescription:
       ogDescription ||
       metaDescription ||
-      "Compare top real estate agents in Norway easily with Advokattipset.no.no.",
-    canonicalUrl: canonicalUrl || "/faq",
+      "Compare top real estate agents in Norway easily with Advokattipset.no.",
+    canonicalUrl: canonicalUrl || "/ofte-stilte-sporsmal",
     robots: robots || "index, follow",
     jsonLd: jsonLd || {
       "@context": "https://schema.org",
       "@type": "WebSite",
-      name: "Advokattipset.no.no",
+      name: "Advokattipset.no",
     },
     publishedDate: publishedDate,
     lastUpdatedDate: lastUpdatedDate,

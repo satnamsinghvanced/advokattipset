@@ -14,8 +14,8 @@ export async function generateMetadata() {
   const sitemapData = await getSiteMapData();
   if (!sitemapData) {
     return generatePageMetadata({
-      title: "Sitemap | Advokattipset.no.no",
-      description: "Overview of all pages on Advokattipset.no.no",
+      title: "Sitemap | Advokattipset.no",
+      description: "Overview of all pages on Advokattipset.no",
       path: "/sitemap",
     });
   }
@@ -35,8 +35,8 @@ export async function generateMetadata() {
   } = sitemapData;
 
   return generatePageMetadata({
-    title: metaTitle || "Sitemap | Advokattipset.no.no",
-    description: metaDescription || "Overview of all pages on Advokattipset.no.no",
+    title: metaTitle || "Sitemap | Advokattipset.no",
+    description: metaDescription || "Overview of all pages on Advokattipset.no",
     path: "/sitemap",
     keywords: metaKeywords
       ? metaKeywords
@@ -46,11 +46,11 @@ export async function generateMetadata() {
       : ["sitemap", "advokattipset", "website overview", "site structure", "pages"],
     type: "website",
     image: metaImage || null,
-    ogTitle: ogTitle || metaTitle || "Sitemap | Advokattipset.no.no",
+    ogTitle: ogTitle || metaTitle || "Sitemap | Advokattipset.no",
     ogDescription:
       ogDescription ||
       metaDescription ||
-      "Explore all the pages on Advokattipset.no.no",
+      "Explore all the pages on Advokattipset.no",
     canonicalUrl: canonicalUrl || "/sitemap",
     robots: robots || "index, follow",
     jsonLd: jsonLd || {},

@@ -1,5 +1,4 @@
 import { HowItWorksCardProps } from "@/const/types";
-import Image from "next/image";
 
 const HowItWorksCard = ({
   icon,

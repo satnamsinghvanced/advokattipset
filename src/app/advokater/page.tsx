@@ -1,9 +1,9 @@
 import Breadcrumbs from "@/components/global/breadcrumbs";
+import { ArtiklerPageProps } from "@/const/types";
 import { getCachedRealEstateData } from "@/services/page/real-estate-service";
 import { generatePageMetadata } from "@/utils/metadata";
 import type { Metadata } from "next";
-import EiendomsmeglerContent from "./content";
-import { EiendomsmeglerPageProps } from "@/const/types";
+import ArtiklerContent from "./content";
 export const dynamic = "force-static";
 
 const getRealestateAgentsData: any = async () => {
@@ -15,7 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const realestateAgents = await getRealestateAgentsData();
   if (!realestateAgents) {
     return generatePageMetadata({
-      title: "Real Estate Agents | Advokattipset.no.no",
+      title: "Real Estate Agents | Advokattipset.no",
       description: "Compare and find the best real estate agents in Norway",
       path: "/advokater",
     });
@@ -39,40 +39,40 @@ export async function generateMetadata(): Promise<Metadata> {
     bannerImage,
   } = realestateAgents;
   return generatePageMetadata({
-    title: metaTitle || heading || "Real Estate Agents | Advokattipset.no.no",
+    title: metaTitle || heading || "Real Estate Agents | Advokattipset.no",
     description:
       metaDescription ||
       subHeading ||
-      "Welcome to Advokattipset.no.no — compare and find the best real estate agents in Norway.",
-    path: "/advokater",
+      "Welcome to Advokattipset.no — compare and find the best real estate agents in Norway.",
+    path: "/ArtiklerPageProps",
     keywords: metaKeywords
       ? metaKeywords
-          .split(",")
-          ?.map((k: string) => k.trim())
-          .filter(Boolean)
+        .split(",")
+        ?.map((k: string) => k.trim())
+        .filter(Boolean)
       : ["advokattipset", "real estate", "agents", "compare"],
     type: ogType || "website",
     image: metaImage || ogImage || bannerImage || null,
-    ogTitle: ogTitle || metaTitle || "Real Estate Agents | Advokattipset.no.no",
+    ogTitle: ogTitle || metaTitle || "Real Estate Agents | Advokattipset.no",
     ogDescription:
       ogDescription ||
       metaDescription ||
-      "Compare top real estate agents in Norway easily with Advokattipset.no.no.",
-    canonicalUrl: canonicalUrl || "/advokater",
+      "Compare top real estate agents in Norway easily with Advokattipset.no.",
+    canonicalUrl: canonicalUrl || "/ArtiklerPageProps",
     robots: robots || "index, follow",
     jsonLd: jsonLd || {
       "@context": "https://schema.org",
       "@type": "WebSite",
-      name: "Advokattipset.no.no",
+      name: "Advokattipset.no",
     },
     publishedDate: publishedDate,
     lastUpdatedDate: lastUpdatedDate,
   });
 }
 
-const EiendomsmeglerPage = async ({
+const ArtiklerPage = async ({
   searchParams,
-}: EiendomsmeglerPageProps) => {
+}: ArtiklerPageProps) => {
   const params = await searchParams;
   const county = params?.county || "oslo";
   const cp = params?.cp;
@@ -81,7 +81,7 @@ const EiendomsmeglerPage = async ({
   return (
     <>
       <Breadcrumbs className="mt-8" />
-      <EiendomsmeglerContent
+      <ArtiklerContent
         county={county}
         cp={cp}
         realestateAgents={realestateAgents}
@@ -90,4 +90,4 @@ const EiendomsmeglerPage = async ({
   );
 };
 
-export default EiendomsmeglerPage;
+export default ArtiklerPage;

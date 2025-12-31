@@ -1,7 +1,7 @@
+import DefaultLayout from "@/components/layout/DefaultLayout";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
-import DefaultLayout from "@/components/layout/DefaultLayout";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -29,6 +29,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        {/* Add custom styles here */}
+        <style>{`
+          html {
+            overflow: auto !important;
+          }
+        `}</style>
+      </head>
       <body className={`${inter.variable} antialiased`}>
         <Providers>
           <DefaultLayout>{children}</DefaultLayout>

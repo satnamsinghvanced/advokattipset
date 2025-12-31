@@ -15,8 +15,8 @@ export async function generateMetadata() {
   const aboutData = await getAboutData();
   if (!aboutData) {
     return generatePageMetadata({
-      title: "About | Advokattipset.no.no",
-      description: "Learn more about Advokattipset.no.no",
+      title: "About | Advokattipset.no",
+      description: "Learn more about Advokattipset.no",
       path: "/about",
     });
   }
@@ -40,25 +40,25 @@ export async function generateMetadata() {
     image,
   } = aboutData;
   return generatePageMetadata({
-    title: metaTitle || heading || "About Advokattipset.no.no",
+    title: metaTitle || heading || "About Advokattipset.no",
     description:
-      metaDescription || subHeading || "Learn more about Advokattipset.no.no",
-    path: slug || "/about",
+      metaDescription || subHeading || "Learn more about Advokattipset.no",
+    path: slug || "/om-oss",
     keywords: metaKeywords
       ? metaKeywords
           .split(",")
           ?.map((k: string) => k.trim())
           .filter(Boolean)
-      : ["about", "advokattipset", "real estate"],
+      : ["om-oss", "advokattipset", "real estate"],
     type: ogType || "website",
     image: metaImage || ogImage || image || null,
-    ogTitle: ogTitle || metaTitle || heading || "About Advokattipset.no.no",
+    ogTitle: ogTitle || metaTitle || heading || "Om oss | Advokattipset.no",
     ogDescription:
       ogDescription ||
       metaDescription ||
       subHeading ||
-      "Learn more about Advokattipset.no.no",
-    canonicalUrl: canonicalUrl || "/about",
+      "Lær mer om Advokattipset.no",
+    canonicalUrl: canonicalUrl || "/om-oss",
     robots: robots || "index, follow",
     jsonLd: jsonLd || {},
     publishedDate: publishedDate || "2025-11-28T00:00:00Z",

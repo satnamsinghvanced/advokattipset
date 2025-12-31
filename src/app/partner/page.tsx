@@ -16,7 +16,7 @@ export async function generateMetadata() {
   if (!partnerData) {
     return generatePageMetadata({
       title: "Partner | Advokattipset.no.no",
-      description: "Join the Meglertip network and collaborate with us",
+      description: "Join the Advokattipset network and collaborate with us",
       path: "/partner",
     });
   }
@@ -45,14 +45,14 @@ export async function generateMetadata() {
     description:
       metaDescription ||
       subHeading ||
-      "Learn more about becoming a Meglertip partner",
+      "Learn more about becoming a Advokattipset partner",
     path: slug || "/partner",
     keywords: metaKeywords
       ? metaKeywords
         .split(",")
         ?.map((k: string) => k.trim())
         .filter(Boolean)
-      : ["partner", "advokattipset", "business", "collaboration"],
+      : ["partner", "Advokattipset.no", "business", "collaboration"],
     type: ogType || "website",
     image: metaImage || ogImage || image || null,
     ogTitle: ogTitle || metaTitle || heading || "Partner",
@@ -60,7 +60,7 @@ export async function generateMetadata() {
       ogDescription ||
       metaDescription ||
       subHeading ||
-      "Join the Meglertip network and collaborate with us",
+      "Join the Advokattipset network and collaborate with us",
     canonicalUrl: canonicalUrl || "/partner",
     robots: robots || "index, follow",
     jsonLd: jsonLd || {},
@@ -79,7 +79,7 @@ const PartnerPage = async () => {
 
   return (
     <>
-      <Breadcrumbs className="mt-8" />
+      <Breadcrumbs className="mt-8" showBackground={true} />
       <PartnerContent partnerData={partnerData} howItWorks={howItWorks} />
     </>
   );

@@ -48,7 +48,7 @@ export async function generatePageMetadata({
   lastUpdatedDate?: string;
 }): Promise<Metadata> {
   const siteUrl = (
-    process.env.NEXT_PUBLIC_BASE_URL || "https://meglertipset.no"
+    process.env.NEXT_PUBLIC_BASE_URL || "https://Advokattipset.no"
   ).replace(/\/$/, "");
 
   // Consistently use the siteUrl for canonicals.
@@ -83,12 +83,12 @@ export async function generatePageMetadata({
     : `${cleanBase}/images/og-default.jpg`;
 
   const pageTitle = title
-    ? title === "Advokattipset.no.no"
-      ? `Advokattipset.no.no`
-      : `${title} | Advokattipset.no.no`
-    : "Advokattipset.no.no";
+    ? title === "Advokattipset.no"
+      ? `Advokattipset.no`
+      : `${title} | Advokattipset.no`
+    : "Advokattipset.no";
 
-  const ogFinalTitle = ogTitle ? `${ogTitle} | Advokattipset.no.no` : pageTitle;
+  const ogFinalTitle = ogTitle ? `${ogTitle} | Advokattipset.no` : pageTitle;
   const ogFinalDescription = ogDescription || description;
 
   const openGraphImages = [
@@ -156,7 +156,7 @@ export async function generatePageMetadata({
       title: ogFinalTitle,
       description: ogFinalDescription,
       url: finalCanonical,
-      siteName: "Advokattipset.no.no",
+      siteName: "Advokattipset.no",
       type,
       images: openGraphImages,
       ...dates,

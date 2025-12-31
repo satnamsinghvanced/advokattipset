@@ -75,7 +75,7 @@ const FormPage = async () => {
       {/* <Form formSelect={formSelect} /> */}
       <Form
         formSelect={formSelect}
-        isMultiSelect={formPageData.multipleSelect}
+        isMultiSelect={formPageData?.multipleSelect}
         pageTitle={formPageData?.title}
         pageDescription={formPageData.description}
         privacyText={formPageData.privacyText}

@@ -275,6 +275,7 @@ export interface ArticlesCardProps {
 
 export interface BreadcrumbsProps {
   className?: string;
+  showBackground?: boolean;
 }
 
 export type DescriptionProps = {
@@ -346,7 +347,7 @@ export interface FormSelectButtonsProps {
   onSelect: (formId: string) => void;
 }
 
-export interface EiendomsmeglerPageProps {
+export interface ArtiklerPageProps {
   searchParams: {
     [key: string]: string | string[] | undefined;
   };

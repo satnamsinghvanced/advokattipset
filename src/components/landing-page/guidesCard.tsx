@@ -1,9 +1,9 @@
 
+import { GuidesCardProps } from '@/const/types';
+import Image from 'next/image';
 import Link from 'next/link';
 import { FaArrowRightLong } from "react-icons/fa6";
 import ChartIcon from '../icons/chart';
-import { GuidesCardProps } from '@/const/types';
-import Image from 'next/image';
 
 const GuidesCard = ({ city, description, href = "#", icon }: GuidesCardProps) => {
     const imageBaseUrl = process.env.NEXT_PUBLIC_IMAGE_URL ?? "";

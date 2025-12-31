@@ -1,11 +1,11 @@
 import { HowItWorksProps } from "@/const/types";
-import HowItWorksCard from "./HowItWorksCard";
-import DocIcon from "../icons/doc";
-import WeighIcon from "../icons/weigh";
-import ThumbUpIcon from "../icons/thumbup";
+import BarGraphIcon from "../icons/barGraph";
 import BatchIcon from "../icons/batch";
 import CertificateIcon from "../icons/certificate";
-import BarGraphIcon from "../icons/barGraph";
+import DocIcon from "../icons/doc";
+import ThumbUpIcon from "../icons/thumbup";
+import WeighIcon from "../icons/weigh";
+import HowItWorksCard from "./HowItWorksCard";
 
 const HowItWorks = ({
   cards,
