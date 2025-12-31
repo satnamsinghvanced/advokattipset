@@ -81,7 +81,7 @@ const AgentCard = ({
           ></div>
           <Link
             className="px-8 !w-[185px] !h-[48px] mt-[24px] flex justify-center items-center sm:hidden bg-transparent border border-primary text-primary rounded-xl hover:bg-primary hover:text-background transition-all ease-in-out duration-300"
-            href={`/artikler/${slug ? slug.replace(/\s+/g, "") : "default_slug"
+            href={`/advokater/${slug ? slug.replace(/\s+/g, "") : "default_slug"
               }`}
           >
             <span>Se profil ddd</span>
