@@ -20,22 +20,22 @@ export async function generateMetadata({
 
   if (!placeData) {
     return {
-      title: "Artikler | Advokattipset.no",
-      description: "Finn artikler i ditt område",
+      title: "Advokater | Advokattipset.no",
+      description: "Finn advokater i ditt område",
       robots: "index, follow",
       alternates: {
-        canonical: `https://advokattipset.no/artikler/${slugValue}`,
+        canonical: `https://advokattipset.no/advokater/${slugValue}`,
       },
       openGraph: {
-        title: "Artikler | Advokattipset.no",
-        description: "Finn artikler i ditt område",
-        url: `https://advokattipset.no/artikler/${slugValue}`,
+        title: "Advokater | Advokattipset.no",
+        description: "Finn advokater i ditt område",
+        url: `https://advokattipset.no/advokater/${slugValue}`,
         type: "website",
       },
       twitter: {
         card: "summary_large_image",
-        title: "Artikler | Advokattipset.no",
-        description: "Finn artikler i ditt område",
+        title: "Advokater | Advokattipset.no",
+        description: "Finn advokater i ditt område",
       },
     };
   }
@@ -55,7 +55,7 @@ export async function generateMetadata({
 
   const canonical = canonicalUrl?.startsWith("http")
     ? canonicalUrl
-    : `https://advokattipset.no/artikler/${canonicalUrl || slugValue}`;
+    : `https://advokattipset.no/advokater/${canonicalUrl || slugValue}`;
 
   return {
     title: metaTitle || ogTitle || `${titleFromSlug} | Advokattipset.no`,

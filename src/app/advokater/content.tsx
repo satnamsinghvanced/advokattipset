@@ -7,7 +7,7 @@ import { getCachedLatestFAQs } from "@/services/page/faq-service";
 import { cleanHtmlContent } from "@/utils/cleanHtml";
 import CompanyContent from "../../components/company/companyContent";
 
-const ArtiklerContent = async ({
+const AdvokaterContent = async ({
   searchParams,
   cp,
   county,
@@ -88,4 +88,4 @@ const ArtiklerContent = async ({
   );
 };
 
-export default ArtiklerContent;
+export default AdvokaterContent;

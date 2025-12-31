@@ -1,9 +1,9 @@
 import Breadcrumbs from "@/components/global/breadcrumbs";
-import { ArtiklerPageProps } from "@/const/types";
+import { AdvokaterPageProps } from "@/const/types";
 import { getCachedRealEstateData } from "@/services/page/real-estate-service";
 import { generatePageMetadata } from "@/utils/metadata";
 import type { Metadata } from "next";
-import ArtiklerContent from "./content";
+import AdvokaterContent from "./content";
 export const dynamic = "force-static";
 
 const getRealestateAgentsData: any = async () => {
@@ -44,7 +44,7 @@ export async function generateMetadata(): Promise<Metadata> {
       metaDescription ||
       subHeading ||
       "Welcome to Advokattipset.no — compare and find the best real estate agents in Norway.",
-    path: "/ArtiklerPageProps",
+    path: "/advokater",
     keywords: metaKeywords
       ? metaKeywords
         .split(",")
@@ -58,7 +58,7 @@ export async function generateMetadata(): Promise<Metadata> {
       ogDescription ||
       metaDescription ||
       "Compare top real estate agents in Norway easily with Advokattipset.no.",
-    canonicalUrl: canonicalUrl || "/ArtiklerPageProps",
+    canonicalUrl: canonicalUrl || "/advokater",
     robots: robots || "index, follow",
     jsonLd: jsonLd || {
       "@context": "https://schema.org",
@@ -70,9 +70,9 @@ export async function generateMetadata(): Promise<Metadata> {
   });
 }
 
-const ArtiklerPage = async ({
+const AdvokaterPage = async ({
   searchParams,
-}: ArtiklerPageProps) => {
+}: AdvokaterPageProps) => {
   const params = await searchParams;
   const county = params?.county || "oslo";
   const cp = params?.cp;
@@ -81,7 +81,7 @@ const ArtiklerPage = async ({
   return (
     <>
       <Breadcrumbs className="mt-8" />
-      <ArtiklerContent
+      <AdvokaterContent
         county={county}
         cp={cp}
         realestateAgents={realestateAgents}
@@ -90,4 +90,4 @@ const ArtiklerPage = async ({
   );
 };
 
-export default ArtiklerPage;
+export default AdvokaterPage;

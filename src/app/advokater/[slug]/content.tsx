@@ -72,7 +72,7 @@ const SlugContent = async ({
                   cleanHtmlContent(placeData?.data?.description || "")
                 ) || "",
             }}
-            className="artikler-content"
+            className="advokater-content"
           ></div>
           <div className="mb-8">
             <CompanyContent

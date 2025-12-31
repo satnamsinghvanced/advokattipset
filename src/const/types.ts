@@ -347,7 +347,7 @@ export interface FormSelectButtonsProps {
   onSelect: (formId: string) => void;
 }
 
-export interface ArtiklerPageProps {
+export interface AdvokaterPageProps {
   searchParams: {
     [key: string]: string | string[] | undefined;
   };
