@@ -862,6 +862,7 @@ const Form = ({
               placeholder="0567"
               labelPlacement="outside"
               maxLength={4}
+              classNames={{innerWrapper:" !m-0 ", inputWrapper:"p-0",input:"p-4"}}
               required={field.required}
               value={currentFormData?.values.postalCode || ""}
               errorMessage={
