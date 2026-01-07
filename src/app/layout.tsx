@@ -31,7 +31,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         {/* Add custom styles here */}
-        <style>{`
+        <style suppressHydrationWarning>{`
           html {
             overflow: auto !important;
           }

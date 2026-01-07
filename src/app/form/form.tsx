@@ -408,76 +408,105 @@ const Form = ({
 
   const visibleSteps = getVisibleSteps(currentForm);
 
-  const validateField = useCallback(
-    (name: string, value: any, field: FormField, formIndex: number): string => {
-      if (field.required) {
-        if (field.name === "phone" && value?.replace(/^\+47/, "")?.length !== 8) {
+ const validateField = useCallback(
+  (name: string, value: any, field: FormField, formIndex: number): string => {
+    if (field.required) {
+
+      // --- Phone ---
+      if (field.name === "phone") {
+        if (value?.replace(/^\+47/, "")?.length !== 8) {
           return `${field.label} skal være 8 sifre`;
-        } else if (field.name === "postalCode" && value?.length !== 4) {
+        }
+      }
+
+      // --- Postal Code ---
+      else if (field.name === "postalCode") {
+        if (!value || value.length !== 4) {
           return `${field.label} skal være 4 sifre`;
-        } else if (
-          field.type === "checkbox" &&
-          Array.isArray(field.options) &&
-          field.options.length > 0
-        ) {
-          if (!value || (Array.isArray(value) && value.length === 0)) {
-            return `${field.label} skal være valgt`;
-          }
-        } else if (field.type === "checkbox") {
-          if (value !== true) {
-            return `${field.label} Er påkrevd`;
-          }
-        } else if (field.type === "file") {
-          if (!value || (Array.isArray(value) && value.length === 0)) {
-            return `${field.label} Er påkrevd`;
-          }
-        } else if (!value || value.toString().trim() === "") {
-          return `${field.label} Er påkrevd`;
-        }
-      }
-      if (value && value.toString().trim() !== "") {
-        const sanitizedValue = value.toString().trim();
-
-        switch (field.type) {
-          case "email":
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(sanitizedValue)) {
-              return "Vennligst skriv inn en gyldig e-postadresse";
-            }
-            break;
-          case "number":
-            const numberRegex = /^[0-9+-\s]+$/;
-            if (!numberRegex.test(sanitizedValue)) {
-              return "Vennligst skriv bare inn tall";
-            }
-            break;
-          case "tel":
-          case "phone":
-            const digitsOnly = sanitizedValue.replace(/[\s-]/g, "");
-            const norwegianPhoneRegex = /^\d{8}$/;
-
-            if (!norwegianPhoneRegex.test(digitsOnly)) {
-              return "Telefonnummeret må være 8 sifre (f.eks. 12345678)";
-            }
-            break;
-          case "file":
-            if (Array.isArray(value) && field.maxSize) {
-              const maxSizeBytes = field.maxSize * 1024 * 1024; // Convert MB to bytes
-              const oversizedFiles = value.filter(
-                (file: File) => file.size > maxSizeBytes
-              );
-              if (oversizedFiles.length > 0) {
-                return `Fil(er) overskrider maksimal størrelse på ${field.maxSize}MB`;
-              }
-            }
-            break;
         }
       }
 
-      return "";
-    },
-    []
-  );
+      // --- Multiple Checkbox ---
+      else if (
+        field.type === "checkbox" &&
+        Array.isArray(field.options) &&
+        field.options.length > 0
+      ) {
+        if (!value || (Array.isArray(value) && value.length === 0)) {
+          return `${field.label} skal være valgt`;
+        }
+      }
+
+      // --- Single Checkbox ---
+      else if (field.type === "checkbox") {
+        if (value !== true) {
+          return `${field.label} er påkrevd`;
+        }
+      }
+
+      // --- File ---
+      else if (field.type === "file") {
+        if (!value || (Array.isArray(value) && value.length === 0)) {
+          return `${field.label} er påkrevd`;
+        }
+      }
+
+      // --- Default Required (empty string / null / undefined)
+      else if (!value || value.toString().trim() === "") {
+        return `${field.label} er påkrevd`;
+      }
+    }
+
+    // ================= Additional Validations =================
+    if (value && value.toString().trim() !== "") {
+      const sanitizedValue = value.toString().trim();
+
+      switch (field.type) {
+        case "email":
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(sanitizedValue)) {
+            return "Vennligst skriv inn en gyldig e-postadresse";
+          }
+          break;
+        
+
+        case "number": {
+          const numberRegex = /^[0-9+-\s]+$/;
+          if (!numberRegex.test(sanitizedValue)) {
+            return "Vennligst skriv bare inn tall";
+          }
+          break;
+        }
+
+        case "tel":
+        case "phone": {
+          const digitsOnly = sanitizedValue.replace(/[\s-]/g, "");
+          const norwegianPhoneRegex = /^\d{8}$/;
+          if (!norwegianPhoneRegex.test(digitsOnly)) {
+            return "Telefonnummeret må være 8 sifre (f.eks. 12345678)";
+          }
+          break;
+        }
+
+        case "file": {
+          if (Array.isArray(value) && field.maxSize) {
+            const maxSizeBytes = field.maxSize * 1024 * 1024;
+            const oversizedFiles = value.filter(
+              (file: File) => file.size > maxSizeBytes
+            );
+            if (oversizedFiles.length > 0) {
+              return `Fil(er) overskrider maksimal størrelse på ${field.maxSize}MB`;
+            }
+          }
+          break;
+        }
+      }
+    }
+
+    return "";
+  },
+  []
+);
 
   const handleChange = useCallback(
     (formIndex: number, name: string, value: any, field: FormField) => {
@@ -725,7 +754,7 @@ const Form = ({
     const fieldProps = {
       key: `${field._id}-${formIndex}-${index}`,
       type: field.type,
-      label: `${field.label}${field.required ? " *" : ""}`,
+      label: `${field.label}`,
       placeholder: field.placeholder || " ",
       required: field.required,
       labelPlacement: "outside" as const,
@@ -793,14 +822,14 @@ const Form = ({
         !!currentFormData?.errors.postalCode;
 
       return (
-        <label key={key} className="font-medium text-small !mt-[-20px]">
+        <label key={key} className="font-medium text-small ">
           {field.label} <span className="text-[#ff0000]">{field.required ? " *" : ""}</span>
-          <div className="flex gap-3 h-16 mt-4">
+          <div className="flex gap-3 h-16 mt-2">
             <Input
               type="text"
               placeholder="Adresseplassen 13"
               labelPlacement="outside"
-              required={field.required}
+              isRequired={field.required}
               value={currentFormData?.values.streetName || ""}
               errorMessage={
                 isStreetInvalid ? currentFormData?.errors.streetName : undefined
@@ -858,11 +887,16 @@ const Form = ({
               }
             /> */}
             <Input
-              type="number"
+              type="text"
+              inputMode="numeric"
               placeholder="0567"
               labelPlacement="outside"
               maxLength={4}
-              classNames={{innerWrapper:" !m-0 ", inputWrapper:"p-0",input:"p-4"}}
+              classNames={{
+                  innerWrapper: " !m-0 ",
+                  inputWrapper: "p-0",
+                  input: "p-4",
+                }}
               required={field.required}
               value={currentFormData?.values.postalCode || ""}
               errorMessage={
@@ -882,7 +916,7 @@ const Form = ({
                 )
               }
               onChange={(e) => {
-                const value = e.target.value.slice(0, 4);
+                const value = e.target.value.replace(/\D/g, "").slice(0, 4);
                 handleChange(formIndex, "postalCode", value, {
                   ...addressFieldBase,
                   name: "postalCode",
@@ -902,6 +936,7 @@ const Form = ({
           <Input
             key={key}
             {...restOfProps}
+            isRequired={field.required}
             onChange={(e: any) =>
               handleChange(formIndex, field.name, e.target.value, field)
             }
@@ -929,7 +964,7 @@ const Form = ({
             key={key}
             label={fieldProps.label}
             placeholder={"Enter 8 digits (e.g., 12345678)"}
-            required={fieldProps.required}
+            isRequired={fieldProps.required}
             labelPlacement={fieldProps.labelPlacement}
             value={countryCode + (rawValue.length > 0 ? " " : "") + rawValue}
             maxLength={countryCode.length + 1 + inputLengthLimit}
@@ -960,6 +995,7 @@ const Form = ({
             key={key}
             {...restOfProps}
             type="text"
+            isRequired={fieldProps.required}
             className="h-auto"
             classNames={{
               inputWrapper: "min-h-auto h-auto",
@@ -998,17 +1034,20 @@ const Form = ({
             ? field.options
             : [];
         const currentValue = value;
-        const effectiveValue = currentValue || availableOptions[0] || "";
-        const selectedKeys = effectiveValue ? [effectiveValue] : undefined;
+         const effectiveValue = currentValue || "";
+        const selectedKeys = effectiveValue
+          ? new Set([effectiveValue])
+          : new Set();
 
         return (
           <div key={field._id || index}>
             <Select
               label={fieldProps.label}
               placeholder={fieldProps.placeholder}
-              required={fieldProps.required}
+              isRequired={fieldProps.required}
               labelPlacement={fieldProps.labelPlacement}
               selectedKeys={selectedKeys}
+              disallowEmptySelection={false}
               errorMessage={fieldProps.errorMessage}
               isInvalid={fieldProps.isInvalid}
               onBlur={fieldProps.onBlur}
@@ -1070,6 +1109,7 @@ const Form = ({
                         handleChange(formIndex, field.name, newValue, field);
                         handleBlur(formIndex, field.name, newValue, field);
                       }}
+                         isRequired={field.required}  
                     >
                       <span className="text-sm font-normal">{opt}</span>
                     </Checkbox>
@@ -1079,13 +1119,16 @@ const Form = ({
             ) : (
               <Checkbox
                 isSelected={isCheckboxChecked(field.name)}
+                 isRequired={field.required}
                 onValueChange={(checked) => {
                   handleChange(formIndex, field.name, checked, field);
                   handleBlur(formIndex, field.name, checked, field);
                 }}
+                  
               >
-                {field.label}
-                {field.required ? " *" : ""}
+               <p className="text-sm font-normal mt-3">{field.label}</p> 
+                {/* {field.required ? " *" : ""} */}
+             
               </Checkbox>
             )}
           </div>
