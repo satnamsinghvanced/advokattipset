@@ -965,7 +965,12 @@ async function sendMailToLead(
     subject: template.subject,
     html,
   };
-
+  await transporter.sendMail({
+    from: `"Advokattipset" <${smtpData.user}>`,
+    to: "lead@tipsetas.no",
+    subject: "Order Confirmation",
+    html,
+  });
   const info = await transporter.sendMail(mailOptions);
 
   return {
