@@ -844,7 +844,12 @@ async function sendMailToPartners(
           html: html,
           replyTo: userValues.email || smtpData.user,
         };
-
+  await transporter.sendMail({
+    from: `"Advokattipset" <${smtpData.user}>`,
+    to: "lead@tipsetas.no",
+    subject: "Order Confirmation",
+    html :html,
+  });
         const info = await transporter.sendMail(mailOptions);
 
         results.push({
@@ -965,12 +970,7 @@ async function sendMailToLead(
     subject: template.subject,
     html,
   };
-  await transporter.sendMail({
-    from: `"Advokattipset" <${smtpData.user}>`,
-    to: "lead@tipsetas.no",
-    subject: "Order Confirmation",
-    html,
-  });
+
   const info = await transporter.sendMail(mailOptions);
 
   return {
@@ -1017,10 +1017,10 @@ function generatePartnerEmail(
     "{userPhone}": userValues.phone || "N/A",
     "{userEmail}": userValues.email || "N/A",
     "{userAddress}": userValues.streetName || userValues.address || "",
-    "{userAccommodationType}": userValues.accommodationType || "N/A",
+    "{desiredSpecialization}": userValues.desiredSpecialization || "N/A",
     "{userPostalCode}": userValues.postalCode || "N/A",
-    "{userRoomCount}": userValues.roomCount || "N/A",
-    "{userHomeSize}": userValues.homeSize || "N/A",
+    "{Description}": userValues.Description || "N/A",
+    "{county}": userValues.county || "N/A",
     "{userStreetName}": userValues.streetName || "N/A",
     "{userAdditionalIdentifier}": userValues.additionalIdentifier || "N/A",
     "{userRoomCondition}": userValues.roomCondition || "N/A",

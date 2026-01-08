@@ -10,7 +10,7 @@ import {
   Input,
   Select,
   SelectItem,
-  Textarea
+  Textarea,
 } from "@heroui/react";
 import { useCallback, useEffect, useState } from "react";
 import { FaRegCircleCheck, FaRegCircleXmark } from "react-icons/fa6";
@@ -182,10 +182,11 @@ const FormSelectionField = ({
             <button
               key={form._id}
               type="button"
-              className={`p-4 sm:p-6 rounded-lg transition-all duration-300 text-sm font-medium shadow-sm w-full flex gap-2 flex-col justify-start items-start min-h-[138px] ${isSelected
-                ? "bg-primary/20 text-primary"
-                : "bg-white text-primary"
-                } ${isInvalid && touched ? "border-danger" : ""}`}
+              className={`p-4 sm:p-6 rounded-lg transition-all duration-300 text-sm font-medium shadow-sm w-full flex gap-2 flex-col justify-start items-start min-h-[138px] ${
+                isSelected
+                  ? "bg-primary/20 text-primary"
+                  : "bg-white text-primary"
+              } ${isInvalid && touched ? "border-danger" : ""}`}
               onClick={() => onSelect(form._id)}
             >
               <div className="font-semibold text-2xl w-full text-start">
@@ -311,11 +312,11 @@ const Form = ({
         prev?.map((form, i) =>
           i === index
             ? {
-              ...form,
-              formData: data,
-              loading: false,
-              step: 0, // Reset to step 0 when form loads
-            }
+                ...form,
+                formData: data,
+                loading: false,
+                step: 0, // Reset to step 0 when form loads
+              }
             : form
         )
       );
@@ -327,11 +328,11 @@ const Form = ({
         prev?.map((form, i) =>
           i === index
             ? {
-              ...form,
-              error:
-                error.message || "Failed to load form. Please try again.",
-              loading: false,
-            }
+                ...form,
+                error:
+                  error.message || "Failed to load form. Please try again.",
+                loading: false,
+              }
             : form
         )
       );
@@ -408,105 +409,103 @@ const Form = ({
 
   const visibleSteps = getVisibleSteps(currentForm);
 
- const validateField = useCallback(
-  (name: string, value: any, field: FormField, formIndex: number): string => {
-    if (field.required) {
-
-      // --- Phone ---
-      if (field.name === "phone") {
-        if (value?.replace(/^\+47/, "")?.length !== 8) {
-          return `${field.label} skal være 8 sifre`;
+  const validateField = useCallback(
+    (name: string, value: any, field: FormField, formIndex: number): string => {
+      if (field.required) {
+        // --- Phone ---
+        if (field.name === "phone") {
+          if (value?.replace(/^\+47/, "")?.length !== 8) {
+            return `${field.label} skal være 8 sifre`;
+          }
         }
-      }
 
-      // --- Postal Code ---
-      else if (field.name === "postalCode") {
-        if (!value || value.length !== 4) {
-          return `${field.label} skal være 4 sifre`;
+        // --- Postal Code ---
+        else if (field.name === "postalCode") {
+          if (!value || value.length !== 4) {
+            return `${field.label} skal være 4 sifre`;
+          }
         }
-      }
 
-      // --- Multiple Checkbox ---
-      else if (
-        field.type === "checkbox" &&
-        Array.isArray(field.options) &&
-        field.options.length > 0
-      ) {
-        if (!value || (Array.isArray(value) && value.length === 0)) {
-          return `${field.label} skal være valgt`;
+        // --- Multiple Checkbox ---
+        else if (
+          field.type === "checkbox" &&
+          Array.isArray(field.options) &&
+          field.options.length > 0
+        ) {
+          if (!value || (Array.isArray(value) && value.length === 0)) {
+            return `${field.label} skal være valgt`;
+          }
         }
-      }
 
-      // --- Single Checkbox ---
-      else if (field.type === "checkbox") {
-        if (value !== true) {
+        // --- Single Checkbox ---
+        else if (field.type === "checkbox") {
+          if (value !== true) {
+            return `${field.label} er påkrevd`;
+          }
+        }
+
+        // --- File ---
+        else if (field.type === "file") {
+          if (!value || (Array.isArray(value) && value.length === 0)) {
+            return `${field.label} er påkrevd`;
+          }
+        }
+
+        // --- Default Required (empty string / null / undefined)
+        else if (!value || value.toString().trim() === "") {
           return `${field.label} er påkrevd`;
         }
       }
 
-      // --- File ---
-      else if (field.type === "file") {
-        if (!value || (Array.isArray(value) && value.length === 0)) {
-          return `${field.label} er påkrevd`;
-        }
-      }
+      // ================= Additional Validations =================
+      if (value && value.toString().trim() !== "") {
+        const sanitizedValue = value.toString().trim();
 
-      // --- Default Required (empty string / null / undefined)
-      else if (!value || value.toString().trim() === "") {
-        return `${field.label} er påkrevd`;
-      }
-    }
-
-    // ================= Additional Validations =================
-    if (value && value.toString().trim() !== "") {
-      const sanitizedValue = value.toString().trim();
-
-      switch (field.type) {
-        case "email":
-          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-          if (!emailRegex.test(sanitizedValue)) {
-            return "Vennligst skriv inn en gyldig e-postadresse";
-          }
-          break;
-        
-
-        case "number": {
-          const numberRegex = /^[0-9+-\s]+$/;
-          if (!numberRegex.test(sanitizedValue)) {
-            return "Vennligst skriv bare inn tall";
-          }
-          break;
-        }
-
-        case "tel":
-        case "phone": {
-          const digitsOnly = sanitizedValue.replace(/[\s-]/g, "");
-          const norwegianPhoneRegex = /^\d{8}$/;
-          if (!norwegianPhoneRegex.test(digitsOnly)) {
-            return "Telefonnummeret må være 8 sifre (f.eks. 12345678)";
-          }
-          break;
-        }
-
-        case "file": {
-          if (Array.isArray(value) && field.maxSize) {
-            const maxSizeBytes = field.maxSize * 1024 * 1024;
-            const oversizedFiles = value.filter(
-              (file: File) => file.size > maxSizeBytes
-            );
-            if (oversizedFiles.length > 0) {
-              return `Fil(er) overskrider maksimal størrelse på ${field.maxSize}MB`;
+        switch (field.type) {
+          case "email":
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(sanitizedValue)) {
+              return "Vennligst skriv inn en gyldig e-postadresse";
             }
+            break;
+
+          case "number": {
+            const numberRegex = /^[0-9+-\s]+$/;
+            if (!numberRegex.test(sanitizedValue)) {
+              return "Vennligst skriv bare inn tall";
+            }
+            break;
           }
-          break;
+
+          case "tel":
+          case "phone": {
+            const digitsOnly = sanitizedValue.replace(/[\s-]/g, "");
+            const norwegianPhoneRegex = /^\d{8}$/;
+            if (!norwegianPhoneRegex.test(digitsOnly)) {
+              return "Telefonnummeret må være 8 sifre (f.eks. 12345678)";
+            }
+            break;
+          }
+
+          case "file": {
+            if (Array.isArray(value) && field.maxSize) {
+              const maxSizeBytes = field.maxSize * 1024 * 1024;
+              const oversizedFiles = value.filter(
+                (file: File) => file.size > maxSizeBytes
+              );
+              if (oversizedFiles.length > 0) {
+                return `Fil(er) overskrider maksimal størrelse på ${field.maxSize}MB`;
+              }
+            }
+            break;
+          }
         }
       }
-    }
 
-    return "";
-  },
-  []
-);
+      return "";
+    },
+    []
+  );
 
   const handleChange = useCallback(
     (formIndex: number, name: string, value: any, field: FormField) => {
@@ -520,8 +519,8 @@ const Form = ({
           const newErrors = error
             ? { ...form.errors, [name]: error }
             : Object.fromEntries(
-              Object.entries(form.errors).filter(([key]) => key !== name)
-            );
+                Object.entries(form.errors).filter(([key]) => key !== name)
+              );
 
           return { ...form, values: newValues, errors: newErrors };
         })
@@ -620,13 +619,13 @@ const Form = ({
             prev?.map((form, i) =>
               i === currentFormIndex
                 ? {
-                  ...form,
-                  touched: {
-                    ...form.touched,
-                    [streetField.name]: true,
-                    [postalField.name]: true,
-                  },
-                }
+                    ...form,
+                    touched: {
+                      ...form.touched,
+                      [streetField.name]: true,
+                      [postalField.name]: true,
+                    },
+                  }
                 : form
             )
           );
@@ -823,7 +822,8 @@ const Form = ({
 
       return (
         <label key={key} className="font-medium text-small ">
-          {field.label} <span className="text-[#ff0000]">{field.required ? " *" : ""}</span>
+          {field.label}{" "}
+          <span className="text-[#ff0000]">{field.required ? " *" : ""}</span>
           <div className="flex gap-3 h-16 mt-2">
             <Input
               type="text"
@@ -893,10 +893,10 @@ const Form = ({
               labelPlacement="outside"
               maxLength={4}
               classNames={{
-                  innerWrapper: " !m-0 ",
-                  inputWrapper: "p-0",
-                  input: "p-4",
-                }}
+                innerWrapper: " !m-0 ",
+                inputWrapper: "p-0",
+                input: "p-4",
+              }}
               required={field.required}
               value={currentFormData?.values.postalCode || ""}
               errorMessage={
@@ -1034,7 +1034,7 @@ const Form = ({
             ? field.options
             : [];
         const currentValue = value;
-         const effectiveValue = currentValue || "";
+        const effectiveValue = currentValue || "";
         const selectedKeys = effectiveValue
           ? new Set([effectiveValue])
           : new Set();
@@ -1054,7 +1054,6 @@ const Form = ({
               popoverProps={{
                 placement: "bottom",
                 shouldFlip: false,
-
               }}
               onSelectionChange={(keys) => {
                 const selectedValue = Array.from(keys).join(",");
@@ -1063,7 +1062,7 @@ const Form = ({
               }}
             >
               {availableOptions?.map((opt: string, optIndex: number) => (
-                <SelectItem key={opt || `opt-${optIndex}`} textValue={opt} >
+                <SelectItem key={opt || `opt-${optIndex}`} textValue={opt}>
                   {/* // <SelectItem key={opt || `opt-${optIndex}`} textValue={`${opt} ${optIndex}`}> */}
 
                   {opt}
@@ -1109,7 +1108,7 @@ const Form = ({
                         handleChange(formIndex, field.name, newValue, field);
                         handleBlur(formIndex, field.name, newValue, field);
                       }}
-                         isRequired={field.required}  
+                      isRequired={field.required}
                     >
                       <span className="text-sm font-normal">{opt}</span>
                     </Checkbox>
@@ -1119,16 +1118,14 @@ const Form = ({
             ) : (
               <Checkbox
                 isSelected={isCheckboxChecked(field.name)}
-                 isRequired={field.required}
+                isRequired={field.required}
                 onValueChange={(checked) => {
                   handleChange(formIndex, field.name, checked, field);
                   handleBlur(formIndex, field.name, checked, field);
                 }}
-                  
               >
-               <p className="text-sm font-normal mt-3">{field.label}</p> 
+                <p className="text-sm font-normal mt-3">{field.label}</p>
                 {/* {field.required ? " *" : ""} */}
-             
               </Checkbox>
             )}
           </div>
@@ -1235,8 +1232,8 @@ const Form = ({
                 (isMultiSelectMode
                   ? currentFormIndex === selectedForms.length - 1
                   : true)
-                ? "Send inn"
-                : "Neste"}
+              ? "Send inn"
+              : "Neste"}
           </Button>
         </div>
 
@@ -1271,8 +1268,9 @@ const Form = ({
               {steps?.map((_, i: number) => (
                 <div
                   key={i}
-                  className={`h-6 w-[110px] flex-1 rounded-full ${i <= currentStep ? "bg-formsteps" : "bg-secondary/20"
-                    }`}
+                  className={`h-6 w-[110px] flex-1 rounded-full ${
+                    i <= currentStep ? "bg-formsteps" : "bg-secondary/20"
+                  }`}
                 />
               ))}
             </div>
@@ -1304,10 +1302,11 @@ const Form = ({
                       setCurrentFormIndex(index);
                       setCurrentStep(0);
                     }}
-                    className={`px-3 py-1 text-xs rounded-full ${index === currentFormIndex
-                      ? "bg-primary text-white"
-                      : "bg-white text-primary border border-primary"
-                      }`}
+                    className={`px-3 py-1 text-xs rounded-full ${
+                      index === currentFormIndex
+                        ? "bg-primary text-white"
+                        : "bg-white text-primary border border-primary"
+                    }`}
                   >
                     {form?.title}
                   </button>
@@ -1326,8 +1325,9 @@ const Form = ({
             {visibleSteps?.map((_, i: number) => (
               <div
                 key={i}
-                className={`h-2 flex-1 rounded-full ${i <= currentStep ? "bg-formsteps" : "bg-secondary/20"
-                  }`}
+                className={`h-2 flex-1 rounded-full ${
+                  i <= currentStep ? "bg-formsteps" : "bg-secondary/20"
+                }`}
               />
             ))}
           </div>
@@ -1367,13 +1367,14 @@ const Form = ({
             <h3 className="text-2xl font-semibold mb-6">Step 1</h3>
 
             <div className="flex flex-col gap-[55px] text-[16px] font-semibold min-h-[300px]">
-              {formSelect.length > 1 && < FormSelectionField
-                formSelect={formSelect}
-                selectedForms={selectedForms?.map((f) => f.id)}
-                onSelect={handleFormSelect}
-                isMultiSelectMode={isMultiSelectMode}
-              />}
-
+              {formSelect.length > 1 && (
+                <FormSelectionField
+                  formSelect={formSelect}
+                  selectedForms={selectedForms?.map((f) => f.id)}
+                  onSelect={handleFormSelect}
+                  isMultiSelectMode={isMultiSelectMode}
+                />
+              )}
             </div>
 
             <div className="flex justify-between mt-8 gap-4">
