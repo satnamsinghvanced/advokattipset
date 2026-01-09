@@ -85,7 +85,7 @@ export async function generatePageMetadata({
   const pageTitle = title
     ? title === "Advokattipset.no"
       ? `Advokattipset.no`
-      : `${title} | Advokattipset.no`
+      : `${title} `
     : "Advokattipset.no";
 
   const ogFinalTitle = ogTitle ? `${ogTitle} | Advokattipset.no` : pageTitle;

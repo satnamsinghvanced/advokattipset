@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: SlugPageProps) {
   const articleDoc = await getCachedArticleBySlug(slug ?? "");
   if (!articleDoc) {
     return generatePageMetadata({
-      title: `${title} | Advokattipset.no`,
+      title: `${title} `,
       description: `Read expert artikler about ${title} on Advokattipset.no.`,
       path: `/artikler/${articleCategory}/${slug}`,
     });
@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: SlugPageProps) {
   } = article ?? {};
 
   return generatePageMetadata({
-    title: metaTitle || `${title} | Advokattipset.no`,
+       title: metaTitle || article?.title || title || "Artikler",
     description:
       metaDescription || `Read expert artikler about ${title} on Advokattipset.no.`,
     path: `/artikler/${articleCategory}/${slug}`,

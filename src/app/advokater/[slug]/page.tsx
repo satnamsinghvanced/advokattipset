@@ -58,7 +58,13 @@ export async function generateMetadata({
     : `https://advokattipset.no/advokater/${canonicalUrl || slugValue}`;
 
   return {
-    title: metaTitle || ogTitle || `${titleFromSlug} | Advokattipset.no`,
+    title: placeData?.data?.title ||
+      placeData?.data?.companyName ||
+      placeData?.companyName ||
+      placeData?.title ||
+      placeData?.name ||
+      metaTitle ||
+      ogTitle || metaTitle || ogTitle || `${titleFromSlug} | Advokattipset.no`,
     description: metaDescription || ogDescription || "",
     keywords: metaKeywords
       ? metaKeywords.split(",").map((k: any) => k.trim())

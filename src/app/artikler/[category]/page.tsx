@@ -74,7 +74,7 @@ export async function generateMetadata({
       : ["advokattipset", category, "advokat", "artikler"],
     type: ogType || "website",
     image: ogImage || null,
-    ogTitle: ogTitle || metaTitle || `${category} Artikler | Advokattipset.no`,
+    ogTitle: ogTitle || metaTitle || category || 'Artikler | Advokattipset',
     ogDescription:
       ogDescription ||
       metaDescription ||
