@@ -20,7 +20,7 @@ const PartnerDescriptions = ({ data }: any) => {
                     <div className='w-full max-w-lg'>
                         <Image
                             src={`${imageBaseUrl}${data.image}`}
-                            objectFit="cover" width={100} height={100}
+                            objectFit="cover" width={1000} height={1000} quality={100}
                             alt='partner-card image'
                             className='h-full max-md:max-h-[265px] w-full rounded-2xl'
                             loading="lazy" />
