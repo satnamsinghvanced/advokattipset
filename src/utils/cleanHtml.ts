@@ -6,5 +6,9 @@ export const cleanHtmlContent = (htmlContent: string) => {
   cleaned = cleaned.replace(/<meta[^>]*>/gi, "");
   // Remove canonical <link> tags
   cleaned = cleaned.replace(/<link[^>]*rel=["']canonical["'][^>]*>/gi, "");
+   cleaned = cleaned.replace(
+    /\[text:(.+?),\s*link:(https?:\/\/[^\]]+)\]/gi,
+    (_match, text, link) => `<a href="${link}" target="_blank" rel="noopener noreferrer">${text}</a>`
+  );
   return cleaned;
 };

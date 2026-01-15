@@ -38,12 +38,24 @@ const SlugContent = async ({
   }
 
   //NOTE: dom't remove this variable, company images will be shown here from google drive
-  const companyImageUrl =
-    `${placeData?.data?.companyImage}` || "/images/realEstate.webp";
-  const companies = Array.isArray(placeData.data.companies)
-    ? placeData.data.companies
-    : [];
+ 
+  const companies = Array.isArray(placeData.data.companies) ? placeData.data.companies : [];
   const countyValue = placeData?.data?.countyId?.slug || slug;
+  const imageBaseUrl = process.env.NEXT_PUBLIC_IMAGE_URL ?? "";
+   const companyImageUrl = placeData?.data?.companyImage;
+  const fullUrl = `${imageBaseUrl}${companyImageUrl}`;
+
+  let isImageValid = false;
+
+  if (companyImageUrl) {
+    try {
+      const response = await fetch(fullUrl, { method: 'HEAD' });
+      isImageValid = response.ok;
+    } catch (error) {
+      isImageValid = false;
+    }
+  }
+  const finalSrc = isImageValid ? fullUrl : "/images/realEstate.webp";
 
   return (
     <>
@@ -51,7 +63,7 @@ const SlugContent = async ({
         <div className="w-full">
           {placeData?.data?.companyImage && (
             <Image
-              src={"/images/realEstate.webp"}
+              src={finalSrc}
               width={200}
               height={82}
               alt={"real estate image"}

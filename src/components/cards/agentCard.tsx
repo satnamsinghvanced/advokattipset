@@ -12,9 +12,11 @@ interface AgentCardProps {
   features?: string[];
   slug?: string;
   isRecommended?: boolean;
+  companyImage?: string;
+   icon?: string;
 }
 
-const AgentCard = ({
+const AgentCard = async ({
   companyName = "",
   averageRating = 0,
   totalRating = 0,
@@ -22,7 +24,22 @@ const AgentCard = ({
   description = "",
   features = [],
   slug = "",
+   companyImage='',
+    icon = ''
 }: AgentCardProps) => {
+  const imageBaseUrl = process.env.NEXT_PUBLIC_IMAGE_URL ?? "";
+  const fullUrl = `${imageBaseUrl}${companyImage || icon}`;
+  let isImageValid = false;
+
+  if (companyImage) {
+    try {
+      const response = await fetch(fullUrl, { method: 'HEAD' });
+      isImageValid = response.ok;
+    } catch (error) {
+      isImageValid = false;
+    }
+  }
+  const finalSrc = isImageValid ? fullUrl : "/images/realEstate.webp";
 
   return (
     <div className="p-5 border border-dark/40 w-full relative bg-background rounded-lg overflow-hidden">
@@ -33,13 +50,14 @@ const AgentCard = ({
       )}
       <div className="overflow-visible p-0">
         <div className="flex gap-6 w-full">
-          <div className="flex justify-center items-center">
-            <div className="flex justify-center items-center pt-8 ">
+          <div className="flex justify-center items-start">
+            <div className="flex justify-center items-start">
               <Image
-                src={"/images/realEstate.webp"}
+                src={finalSrc}
                 width={120}
                 height={45}
-                alt={`${companyName} image`}
+                  quality={100}
+                alt={companyName || "real estate"}
                 className="mb-6"
                 loading="lazy"
               />

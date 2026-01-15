@@ -14,7 +14,7 @@
   width: 12px;
   height: 12px;
 }
-input[type=number]::-webkit-inner-spin-button,
+real-estate-content input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none !important;
   margin: 0 !important;
@@ -80,6 +80,13 @@ body {
   .article-content p {
     @apply mb-4 text-[14px] lg:text-[16px] text-secondary;
   }
+   .article-content p a {
+    @apply mb-4 text-[14px] lg:text-[16px] !text-blue-500;
+  }
+
+  .article-content a {
+    @apply mb-4 text-[14px] lg:text-[16px] !text-blue-500;
+  }
 
   .advokater-content h2 {
     @apply mb-4 text-[24px] lg:text-[48px] text-primary font-semibold lg:leading-16 leading-8;
@@ -90,7 +97,13 @@ body {
     @apply mb-4 text-[14px] lg:text-[16px] text-primary;
 
   }
+.advokater-content p a {
+    @apply mb-4 text-[14px] lg:text-[16px] !text-blue-500;
+  }
 
+  .advokater-content a {
+    @apply mb-4 text-[14px] lg:text-[16px] !text-blue-500;
+  }
   /* real-estate-content  */
   .real-estate-content h2 {
     @apply mb-[24px] mt-[40px] text-[24px] lg:text-[48px] text-primary font-semibold lg:leading-14 leading-6;
@@ -111,6 +124,13 @@ body {
   }
     .real-estate-content li {
     @apply text-primary;
+  }
+ .real-estate-content p a {
+    @apply mb-4 text-[14px] lg:text-[16px] !text-blue-500;
+  }
+
+  .real-estate-content a {
+    @apply mb-4 text-[14px] lg:text-[16px] !text-blue-500;
   }
   .ql-code-block-container {
     @apply bg-primary/20 p-6 rounded-2xl
