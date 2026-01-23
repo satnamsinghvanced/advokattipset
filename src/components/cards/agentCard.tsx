@@ -28,15 +28,16 @@ const AgentCard = async ({
   icon = "",
 }: AgentCardProps) => {
   const imageBaseUrl = process.env.NEXT_PUBLIC_IMAGE_URL ?? "";
-  const fullUrl = `${imageBaseUrl}${companyImage || icon}`;
+  const imagePath = companyImage || icon;
+  const fullUrl = imagePath ? `${imageBaseUrl}${imagePath}` : "";
 
   let isImageValid = false;
 
-  if (companyImage || icon) {
+  if (imagePath) {
     try {
       const response = await fetch(fullUrl, { method: "HEAD" });
       isImageValid = response.ok;
-    } catch (error) {
+    } catch {
       isImageValid = false;
     }
   }
@@ -50,8 +51,8 @@ const AgentCard = async ({
       )}
 
       <div className="flex gap-6 w-full">
-        <div className="flex justify-center items-start">
-          {isImageValid && (
+        {isImageValid && (
+          <div className="flex justify-center items-start">
             <Image
               src={fullUrl}
               width={120}
@@ -61,8 +62,8 @@ const AgentCard = async ({
               className="mb-6"
               loading="lazy"
             />
-          )}
-        </div>
+          </div>
+        )}
 
         <div className="w-full">
           <h6 className="font-semibold text-[32px] max-lg:!text-[20px] text-primary pb-0.5 leading-7">
@@ -73,18 +74,20 @@ const AgentCard = async ({
             <Star averageRating={averageRating} totalRating={totalRating} />
           )}
 
-          <div className="pt-3 flex gap-2 flex-wrap">
-            {features?.slice(0, 4).map((feat, index) => (
-              <FeatureChip key={index} label={feat} />
-            ))}
-          </div>
+          {features.length > 0 && (
+            <div className="pt-3 flex gap-2 flex-wrap">
+              {features.slice(0, 4).map((feat, index) => (
+                <FeatureChip key={index} label={feat} />
+              ))}
+            </div>
+          )}
         </div>
 
         <Link
-          className="flex justify-center items-center w-36 h-10 max-sm:hidden bg-transparent border border-primary text-primary rounded-xl hover:bg-primary hover:text-background transition-all ease-in-out duration-300"
+          className="flex justify-center items-center w-36 h-10 max-sm:hidden bg-transparent border border-primary text-primary rounded-xl hover:bg-primary hover:text-background transition-all duration-300"
           href={`/advokater/${slug ? slug.replace(/\s+/g, "") : "default_slug"}`}
         >
-          <span>Se profil</span>
+          Se profil
         </Link>
       </div>
 
@@ -93,11 +96,12 @@ const AgentCard = async ({
           dangerouslySetInnerHTML={{ __html: formatData(description || "") }}
           className="text-secondary line-clamp-2"
         />
+
         <Link
-          className="px-8 !w-[185px] !h-[48px] mt-[24px] flex justify-center items-center sm:hidden bg-transparent border border-primary text-primary rounded-xl hover:bg-primary hover:text-background transition-all ease-in-out duration-300"
+          className="px-8 !w-[185px] !h-[48px] mt-6 flex justify-center items-center sm:hidden bg-transparent border border-primary text-primary rounded-xl hover:bg-primary hover:text-background transition-all duration-300"
           href={`/advokater/${slug ? slug.replace(/\s+/g, "") : "default_slug"}`}
         >
-          <span>Se profil ddd</span>
+          Se profil
         </Link>
       </div>
     </div>
