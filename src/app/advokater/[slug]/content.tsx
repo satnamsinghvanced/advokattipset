@@ -55,7 +55,7 @@ const SlugContent = async ({
       isImageValid = false;
     }
   }
-  const finalSrc = isImageValid ? fullUrl : "/images/realEstate.webp";
+  const finalSrc = isImageValid ? fullUrl : "";
 
   return (
     <>
