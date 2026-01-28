@@ -98,6 +98,6 @@ export async function POST(request: NextRequest) {
     } catch (error) {
         const errorMessage = error instanceof Error ? error.message : 'Unknown server error';
         console.log('MongoDB ContactUs insertion or email error:', errorMessage);
-        return Response.json({ message: 'Failed to save form data due to a server error.', error: errorMessage }, { status: 500 });
+        return Response.json({ message: 'Kunne ikke lagre data.', error: errorMessage }, { status: 500 });
     }
 }
