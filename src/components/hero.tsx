@@ -56,7 +56,7 @@ export default async function HeroPage() {
     faqs: latestFAQs,
     backgroundColor: "bg-background",
     titleColor: "text-primary",
-    questionBgColor: "bg-accent",
+    questionBgColor: "bg-white",
     answerBgColor: "bg-primarylight",
     questionTextColor: "text-primary",
     answerTextColor: "text-dark/70",
